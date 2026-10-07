@@ -1,0 +1,384 @@
+.wf-nav{--bg:#080808;--blue:#146ef5;display:contents;color:#fff;font-family:"Inter Tight","Helvetica Neue",Arial,sans-serif;font-size:16px;-webkit-font-smoothing:antialiased}
+.wf-nav *{box-sizing:border-box;margin:0}
+.wf-nav a{color:inherit;text-decoration:none}
+.wf-nav ul{padding:0}
+.wf-nav .wrap{width:min(1440px,100% - 48px);margin:0 auto}
+
+/* banner */
+.wf-nav .banner{background:var(--blue);height:45px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;text-align:center;padding:0 16px}
+.wf-nav .banner a:hover{text-decoration:underline}
+
+/* nav (sticky) */
+.wf-nav nav{position:sticky;top:0;z-index:20;height:66px;background:var(--bg);border-bottom:1px solid #1f1f1f}
+.wf-nav nav .wrap{height:100%;display:flex;align-items:center;justify-content:space-between;font-weight:500}
+.wf-nav .l,.wf-nav .r{display:flex;align-items:center}
+.wf-nav .l{gap:25px}.wf-nav .r{gap:29px}
+.wf-nav .logo{display:flex;align-items:center;gap:8px;font-size:21px;font-weight:600;margin-right:6px;letter-spacing:-.01em}
+.wf-nav .logo img{height:24px;width:auto;display:block}
+.wf-nav .btn{display:inline-flex;align-items:center;justify-content:center;background:var(--blue);color:#fff;border:0;border-radius:4px;font:500 16px "Inter Tight",Arial,sans-serif;height:51px;padding:0 24px;cursor:pointer;transition:filter .2s}
+.wf-nav .btn:hover{filter:brightness(1.15)}
+.wf-nav .nav-links a{transition:color .2s}
+.wf-nav .nav-links a.act{color:var(--blue)}
+
+/* mega menus */
+.wf-nav .mg{position:absolute;left:0;right:0;top:100%;background:#0b0b0b;border-bottom:1px solid #222;display:none;padding-top:56px}
+.wf-nav .mg.open{display:block}
+.wf-nav .mg .wrap{display:grid;grid-template-columns:repeat(4,354px);gap:0;height:auto}
+.wf-nav .mg h5{font-size:14px;line-height:20px;font-weight:500;color:#8a8a8a;margin-bottom:18px}
+.wf-nav .mg li{list-style:none;margin-bottom:19px}
+.wf-nav .mg li a{font-size:20px;line-height:28px;font-weight:500;color:#fff;transition:color .15s}
+.wf-nav .mg li a:hover{color:var(--blue)}
+.wf-nav .mg .cards{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:20px}
+.wf-nav .mg .side{display:grid;gap:16px;align-content:start}
+.wf-nav .mg .mc{border-radius:8px;padding:22px 24px;min-height:110px;font-size:14px;line-height:20px;color:#ddd}
+.wf-nav .mg .mc b{display:block;font-size:24px;line-height:30px;font-weight:600;color:#fff;margin-bottom:6px}
+.wf-nav .mg .bar{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #222;margin:40px 0 0;padding:16px 0;font-size:14px}
+.wf-nav .mg .bar span{display:flex;align-items:center;gap:14px}
+.wf-nav .mg .sel{background:#161616;border:1px solid #2c2c2c;border-radius:4px;padding:6px 12px;color:#fff;font:500 14px "Inter Tight",Arial,sans-serif;cursor:pointer}
+.wf-nav .mg .ib{width:30px;height:30px;border-radius:50%;background:#1b1b1b;border:1px solid #2c2c2c;display:grid;place-items:center;font-size:13px;color:#ccc;cursor:pointer;font-style:normal}
+.wf-nav .mg .ib.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.wf-nav .scrim{position:fixed;inset:66px 0 0;background:#000c;z-index:10;opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s}
+.wf-nav .scrim.on{opacity:1;visibility:visible}
+
+/* responsive: below 1040px the links, secondary buttons and mega menus are hidden (as in the original) */
+@media(max-width:1040px){.wf-nav .nav-links,.wf-nav .hide-s{display:none}.wf-nav .mg{display:none!important}}
+
+
+
+:root{
+  --bg:#080808;          /* page background (near black) */
+  --card:#171717;        /* lighter card background */
+  --line:#2c2c2c;       /* all thin borders */
+  --text:#ffffff;
+  --muted:#ababab;      /* grey helper text */
+  --blue:#146ef5;       /* buttons + accents */
+  --nav-h:66px;          /* height of YOUR nav; the Monthly/Yearly bar sticks right under it */
+  --max:1440px;          /* widest the content is allowed to get */
+}
+
+/* ---------- 2. RESET + BASE ---------- */
+*{box-sizing:border-box;margin:0;padding:0}   /* width includes padding+border, so sizes are predictable */
+body{background:var(--bg);color:var(--text);
+  font-family:"Inter","Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.4}
+ul{list-style:none}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+/* .wrap = centred column that holds all content */
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+section{padding:0}
+
+/* ---------- 3. HEADINGS ---------- */
+h1{font-size:80px;line-height:1;font-weight:600;letter-spacing:-2px}
+h2{font-weight:600;letter-spacing:-1px;line-height:1.1}
+.h-section{font-size:44px}
+.sub{color:var(--muted);font-size:18px;margin-top:14px;max-width:560px}
+
+/* ---------- 4. BUTTONS ---------- */
+.btn{display:flex;align-items:center;justify-content:center;height:51px;border-radius:4px;
+  background:var(--blue);color:#fff;font-size:17px;font-weight:500;width:100%}
+.btn--inline{display:inline-flex;width:auto;padding:0 20px}
+.btn--white{background:#fff;color:#000;display:inline-flex;width:auto;padding:0 20px;font-weight:500}
+.btn--grey{background:#222;color:#fff}
+
+/* ---------- 5. HERO + MONTHLY/YEARLY BAR ---------- */
+.hero{padding:70px 0 0}
+.billing{position:sticky;top:var(--nav-h);z-index:5;background:var(--bg);
+  border-bottom:1px solid var(--line);margin-top:90px}   /* sticky = stays under the nav while scrolling */
+.billing .wrap{display:flex;align-items:center;gap:8px;height:68px;font-size:17px;font-weight:500}
+.billing .off{color:var(--muted)}
+/* the switch: a hidden checkbox + a label that LOOKS like a switch */
+.switch input{position:absolute;opacity:0}
+.switch span{display:block;width:40px;height:24px;border-radius:12px;background:var(--blue);position:relative;cursor:pointer}
+.switch span::after{content:"";position:absolute;top:3px;left:19px;width:18px;height:18px;border-radius:50%;background:#0a0a0a}
+.switch input:not(:checked) + span{background:#444}
+.switch input:not(:checked) + span::after{left:3px}
+
+/* ---------- 6. PLAN CARDS (shared by Site / Platform / Ecommerce / Workspace) ---------- */
+.plans-top{display:grid;grid-template-columns:3fr 2fr;gap:32px;padding-top:70px}  /* Site plans (3 cols) + Platform plans (2 cols) */
+.plans-top h3{font-size:22px;font-weight:500}
+.plans-top p{color:#e6e6e6;font-size:17px;margin:12px 0 28px;max-width:440px;min-height:48px}
+
+.cards{display:grid;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#0b0b0b}
+.cards--platform{background:var(--card)}
+.c2{grid-template-columns:repeat(2,1fr)}
+.c3{grid-template-columns:repeat(3,1fr)}
+.c4{grid-template-columns:repeat(4,1fr)}
+.card + .card{border-left:1px solid var(--line)}
+
+.head{height:316px;padding:24px;display:flex;flex-direction:column;border-bottom:1px solid var(--line)}
+.head--s{height:272px}      /* shorter header for Ecommerce / Workspace cards */
+.head--xs{height:236px}     /* seats cards */
+.head--add{height:340px}    /* add-on cards (they have an icon on top) */
+.name{font-size:24px;font-weight:600;display:flex;justify-content:space-between;align-items:center;letter-spacing:-.3px}
+.desc{font-size:17px;color:#f0f0f0;margin-top:10px}
+.price{margin-top:auto;height:62px}
+.price b{font-size:32px;font-weight:700;letter-spacing:-.5px}
+.price em{font-style:normal;font-size:20px;color:var(--muted);font-weight:500}
+.price small{display:block;font-size:15px;color:var(--muted);margin-top:2px}
+.head .btn{margin-top:18px}
+.badge{font-size:13px;font-weight:700;background:#fff;color:#000;padding:2px 8px;border-radius:3px;letter-spacing:.3px}
+
+/* feature lists */
+.features{padding:20px 24px 26px}
+.features li{display:flex;justify-content:space-between;align-items:center;font-size:15px;min-height:30px}
+.features .plus{display:inline-block;background:#222;font-weight:700;padding:5px 10px;border-radius:4px;margin-bottom:6px;font-size:14px}
+.features select{background:transparent;color:#fff;border:0;border-bottom:1px solid #666;font:inherit;font-size:15px;margin-right:6px}
+.features select option{background:#222}
+.info{width:14px;height:14px;border:1px solid #8a8a8a;border-radius:50%;flex:none;position:relative}
+.info::before{content:"i";position:absolute;inset:0;text-align:center;font:normal 10px/13px Georgia,serif;color:#8a8a8a}
+
+/* "All prices in USD" note + white buttons */
+.note{text-align:center;color:var(--muted);font-size:16px;margin-top:40px}
+.actions{display:flex;justify-content:center;gap:16px;margin-top:20px}
+
+/* ---------- 7. TABS WITHOUT JAVASCRIPT ----------
+   How it works: each tab is a hidden radio button + a <label>.
+   When a radio is :checked, the CSS "~" (sibling) selector shows the matching panel. */
+.tabs > input{position:absolute;opacity:0;pointer-events:none}
+.tablist{display:flex;width:fit-content;background:#262626;border:1px solid #3d3d3d;border-radius:6px;padding:3px}
+.tablist label{padding:10px 24px;border-radius:4px;font-size:16px;font-weight:500;cursor:pointer}
+.panel{display:none}
+#a-site:checked ~ .tablist [for="a-site"],
+#a-ent:checked  ~ .tablist [for="a-ent"],
+#w-teams:checked ~ .tablist [for="w-teams"],
+#w-free:checked  ~ .tablist [for="w-free"]{background:#000}
+#a-site:checked ~ .panels .p-site,
+#a-ent:checked  ~ .panels .p-ent,
+#w-teams:checked ~ .panels .p-teams,
+#w-free:checked  ~ .panels .p-free{display:block}
+
+/* ---------- 8. ADD-ONS BLOCK ---------- */
+.addons{margin-top:56px;background:var(--card);border-radius:8px;padding-top:40px;text-align:center}
+.addons h2{font-size:40px}
+.addons .tablist{margin:26px auto 36px}
+.addons .cards{border-left:0;border-right:0;border-radius:0;background:transparent;text-align:left}
+.addons .cards .card + .card{border-left:1px solid var(--line)}
+.addons .head{border-bottom:1px solid var(--line)}
+.ico{width:26px;height:26px;margin-bottom:12px}
+.contact{margin-top:auto;font-size:36px;font-weight:700;letter-spacing:-.5px;height:62px}
+.promos{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);text-align:left}
+.promo{height:160px;padding:30px 48px;display:flex;flex-direction:column;justify-content:center}
+.promo h4{font-size:22px;font-weight:600}
+.promo p{font-size:16px;margin:8px 0 14px;max-width:420px;color:#eee}
+.promo a{font-weight:600;font-size:16px}
+.promo--orange{background:linear-gradient(90deg,#20130c 0%,#7a3510 28%,#2a1b14 55%,#1d1d1d 100%)}
+.promo--purple{background:linear-gradient(90deg,#3a1c6a 0%,#7b3fe4 38%,#5a28b8 70%,#2d1a55 100%)}
+.addons .actions{padding:40px 0}
+
+/* ---------- 9. ECOMMERCE + WORKSPACE ---------- */
+.block{padding-top:90px}
+.block .sub{max-width:520px}
+.block .cards{margin-top:44px}
+.workspace .tablist{margin-top:34px}
+.workspace .cards{margin-top:20px}
+.included{font-size:12px;font-weight:700;color:#bbb;border:1px solid #444;border-radius:3px;padding:2px 6px}
+.seatprice small{font-size:15px}
+
+/* Add AI credits row */
+.credits{margin-top:40px;border:1px solid var(--line);border-radius:8px;padding:40px 40px;display:flex;align-items:center;gap:40px}
+.spark{width:56px;height:56px;border-radius:50%;border:2px solid #ddd;display:grid;place-items:center;flex:none;margin-right:12px}
+.spark::after{content:"✦";color:#3b82f6;font-size:26px}
+.credits h3{font-size:48px;font-weight:600;letter-spacing:-1px;line-height:1.1}
+.credits p{color:var(--muted);font-size:18px;margin:8px 0 18px}
+.credits .btn{width:auto;padding:0 20px;height:46px}
+.credits .left{display:flex;align-items:center;flex:1}
+.creditbox{width:456px;border:1px solid var(--line);border-radius:6px;flex:none}
+.creditbox div{padding:22px;text-align:center}
+.creditbox div + div{border-top:1px solid var(--line)}
+.creditbox b{font-size:20px;font-weight:700}
+.creditbox .big{font-size:32px}
+
+/* ---------- 10. VERIFONE BANNER (the image) ----------
+   The banner has a FIXED height. The image has a FIXED width + height
+   and is pinned to the bottom-right, so it can never shrink or lose height.
+   object-fit:cover crops instead of squashing. */
+.calc{position:relative;margin-top:80px;height:552px;overflow:hidden;background:#050505;
+  background-image:radial-gradient(ellipse 340px 300px at 30% 45%,#1151B2, 0%,#0b2f93 45%,transparent 100%)}
+.calc-text{position:relative;z-index:2;padding:96px 48px;max-width:640px}
+.calc h2{font-size:52px;letter-spacing:-1.5px}
+.calc p{font-size:17px;margin:26px 0 22px;max-width:320px;line-height:1.5}
+.calc-img{position:absolute;right:0;bottom:0;width:790px;height:477px;object-fit:cover;object-position:left top}
+
+/* ---------- 11. NEED MORE? (Enterprise) ---------- */
+.ent{margin-top:80px;background:var(--card);border-radius:8px;padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.ent small{color:var(--muted);font-size:18px}
+.ent h2{font-size:52px;letter-spacing:-1.5px;margin:20px 0 24px}
+.ent p{color:var(--muted);font-size:20px;max-width:360px;margin-bottom:24px;line-height:1.5}
+.ent li{border-bottom:1px solid #333;padding:14px 0 16px;font-size:16px;line-height:1.5;max-width:660px}
+.ent li:first-child{padding-top:0}
+.ent li b{display:block;font-weight:700}
+
+/* ---------- 12. FAQ (uses the built-in <details> element: opens/closes with no JS) ---------- */
+.faq{margin-top:80px;border-top:1px solid var(--line);padding:70px 0 40px}
+.faq h2{font-size:56px;letter-spacing:-1.5px}
+.faq-group{display:grid;grid-template-columns:490px 1fr;margin-top:60px}
+.faq-group h3{font-size:22px;font-weight:500}
+details{border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;padding:20px 0;font-size:18px;font-weight:500}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:#3b82f6;font-size:24px;line-height:1}
+details[open] summary{color:#4d8dff}
+details[open] summary::after{content:"–"}
+details > div{padding:0 0 22px;font-size:16px;line-height:1.55;max-width:760px}
+details > div p + p{margin-top:12px}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+
+/* ---------- 13. NEED HELP? CARDS ---------- */
+.help{display:grid;grid-template-columns:490px 1fr;margin-top:50px}
+.help h3{font-size:22px;font-weight:500}
+.help-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.hcard{height:400px;border-radius:8px;border:1px solid var(--line);padding:24px;display:flex;flex-direction:column;justify-content:flex-end;position:relative}
+.hcard--green{background:linear-gradient(90deg,#3b2a1c 0%,#24861F 30%,#10a010 45%,#0E9E1D, 70%,#101510 100%)}
+.hcard--purple{background:linear-gradient(90deg,#2a2030 0%,#8a5aa8 35%,#6a4a85 70%,#1b1620 100%)}
+.hcard h4{font-size:19px;font-weight:600}
+.hcard p{font-size:16px;max-width:240px;margin-top:4px}
+.hcard .go{position:absolute;right:24px;bottom:24px;width:32px;height:32px;border-radius:50%;background:#fff;color:#000;display:grid;place-items:center;font-size:16px}
+
+/* ---------- 14. GET STARTED ---------- */
+.start{display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:110px 0 120px}
+.start h2{font-size:64px;letter-spacing:-2px}
+.start p{font-size:20px;line-height:1.5;max-width:420px}
+.start .row{display:flex;gap:14px;margin-top:32px}
+
+/* ---------- 15. SMALLER SCREENS ---------- */
+@media (max-width:1100px){
+  h1{font-size:56px}
+  .plans-top,.c4,.ent,.start{grid-template-columns:1fr}
+  .c4,.c3{grid-template-columns:1fr 1fr}
+  .faq-group,.help{grid-template-columns:1fr}
+  .calc-img{width:100%;position:relative;margin-top:0}
+  .calc{height:auto}
+  .credits{flex-direction:column;align-items:flex-start}
+  .creditbox{width:100%}
+}
+@media (max-width:700px){
+  .c2,.c3,.c4,.promos,.help-cards{grid-template-columns:1fr}
+  .card + .card{border-left:0;border-top:1px solid var(--line)}
+}
+
+
+
+.badge-b{
+  position:fixed;
+  right:max(16px,env(safe-area-inset-right));
+  bottom:max(16px,env(safe-area-inset-bottom));
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  font-size:12px;
+  font-weight:600;
+  background:#0b0b0b;
+  border:1px solid #2a2a2a;
+  border-radius:999px;
+  color:#fff;
+  text-decoration:none
+}
+.badge i{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:#146ef5;
+  display:block
+}
+.i-img{
+  width:15px;
+  height:15px;
+  border-radius:50%;
+  /* background:#146ef5; */
+  display:block
+}
+
+
+
+/* the footer */
+
+.wf-ft{--bg:#080808;--blue:#146ef5;
+  position:relative;overflow:hidden;padding:130px 0 70px;background:var(--bg);color:#fff;
+  font-family:"Inter Tight","Helvetica Neue",Arial,sans-serif;font-size:16px;-webkit-font-smoothing:antialiased}
+.wf-ft *{box-sizing:border-box;margin:0}
+.wf-ft a{color:inherit;text-decoration:none}
+.wf-ft ul{padding:0}
+.wf-ft .wrap{width:min(1440px,100% - 48px);margin:0 auto}
+
+/* link columns */
+.wf-ft .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.wf-ft h4{font-size:16px;line-height:24px;font-weight:600;margin-bottom:16px}
+.wf-ft .gp+.gp{margin-top:44px}
+.wf-ft li{list-style:none;margin-bottom:14px;font-size:16px;line-height:24px;font-weight:500;color:#b9b9b9}
+.wf-ft li a{transition:color .15s}
+.wf-ft li a:hover{color:#fff}
+.wf-ft li em{font-style:normal;font-size:10px;color:var(--blue);margin-left:6px;font-weight:600}
+
+/* bottom row */
+.wf-ft .low{display:flex;flex-direction:column;gap:22px;margin-top:80px;font-size:14px;color:#b9b9b9;position:relative;z-index:2}
+.wf-ft .soc{display:flex;gap:18px}
+.wf-ft .soc a{width:18px;height:18px;display:grid;place-items:center;font-size:12px;font-weight:700;color:#cfcfcf}
+/* big W: hover reveals media clipped to the logo shape.
+   ---------------------------------------------------------------
+   WHERE THE LOGO GOES  ->  the --wlogo line below.
+   Default = the W drawn as an inline SVG (always works, no loading).
+   To use your own file instead, download it, save it next to this page
+   (e.g. webflow-icon.png) and replace the whole value with:
+        --wlogo:url("webflow-icon.png");
+   NOTE: it must be on YOUR OWN site/folder. Remote links (like uxwing.com)
+   are blocked by the browser for masks (CORS), so the hover would break.
+   The image needs a transparent background; only its shape is used.
+   --------------------------------------------------------------- */
+.wf-ft .ft-w{
+  --wlogo:url("https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/webflow-icon.png");
+  position:absolute;right:max(24px,calc((100vw - 1440px)/2));bottom:0;
+  width:645px;height:410px;cursor:pointer;
+  background:var(--wlogo) center/contain no-repeat;                      /* the W's colour when not hovered */
+  -webkit-mask:var(--wlogo) center/contain no-repeat;
+          mask:var(--wlogo) center/contain no-repeat;
+}
+.wf-ft .wsl{position:absolute;inset:0;opacity:0;transition:opacity .45s;display:flex;align-items:flex-end;padding:0 0 40px 150px;color:#fff;font-size:40px;line-height:44px;font-weight:700}
+.wf-ft .ft-w.on .wsl.cur{opacity:1}
+.wf-ft .wsl .pr{position:absolute;left:150px;right:330px;bottom:22px;display:flex;gap:12px;align-items:center;font-size:14px;font-weight:600}
+.wf-ft .wsl .pr i{flex:1;height:2px;background:#ffffff55;position:relative}
+.wf-ft .wsl .pr i::after{content:"";position:absolute;left:0;top:0;bottom:0;width:0;background:#fff}
+.wf-ft .ft-w.on .wsl.cur .pr i::after{animation:wf-wp 3s linear forwards}
+@keyframes wf-wp{to{width:100%}}
+
+/* image / video slots */
+.wf-ft .mi{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.wf-ft .hide-ph{color:transparent!important;font-size:0!important}
+.wf-ft .hide-ph>:not(.mi){visibility:hidden}
+.wf-ft .hide-ph::before,.wf-ft .hide-ph::after{display:none!important}
+.wf-ft .wsl.hide-ph .pr{visibility:visible;color:#fff;font-size:14px}
+
+@media(max-width:1040px){
+  .wf-ft .cols{grid-template-columns:1fr 1fr}
+  .wf-ft .ft-w{width:320px;height:204px;position:relative;right:auto;margin:48px 0 0 24px}
+  .wf-ft{padding-bottom:0}
+}
+
+
+/* ===== FIX NAV + WHITE/GRAY BUTTONS ===== */
+
+/* 1. Nav button - stays small */
+#wf-nav .r .btn{
+  width: auto !important;
+  height: 36px !important;
+  padding: 0 18px !important;
+  display: inline-flex !important;
+  border-radius: 4px !important;
+}
+
+/* 2. Pricing blue buttons inside cards = full width */
+.card .btn{
+  width: 100%;
+}
+
+/* 3. White / Grey / Inline buttons = auto width ALWAYS */
+.btn--white,
+.btn--grey,
+.btn--inline,
+.actions .btn,
+.start .row .btn{
+  width: auto !important;
+  display: inline-flex !important;
+}

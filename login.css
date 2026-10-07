@@ -1,0 +1,96 @@
+/* =========================================================
+   STEP 1 - TOKENS: colours, sizes. Change them here only.
+   ========================================================= */
+:root{
+  --lg-blue:#146ef5;
+  --lg-text:#080808;
+  --lg-muted:#5a5a5a;
+  --lg-line:#d8d8d8;
+  --lg-dark:#000;
+  --lg-form-w:400px;      /* width of the login form          */
+  --lg-gap:24px;          /* space around the left dark card  */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:14px/1.4 "Inter","Helvetica Neue",Arial,sans-serif;color:var(--lg-text);background:#fff}
+a{color:var(--lg-blue);text-decoration:none}
+
+/* =========================================================
+   STEP 2 - PAGE LAYOUT: two equal columns (card | form)
+   ========================================================= */
+.lg-page{display:grid;grid-template-columns:1fr 1fr;min-height:100vh}
+
+/* =========================================================
+   STEP 3 - LEFT SIDE: dark card with 3 slides (radio buttons)
+   ========================================================= */
+.lg-side{padding:var(--lg-gap)}
+.lg-card{position:relative;background:var(--lg-dark);color:#fff;border-radius:16px;
+  height:calc(100vh - 2 * var(--lg-gap));min-height:560px;overflow:hidden}
+.lg-card>input{position:absolute;opacity:0;pointer-events:none}   /* hidden radios */
+
+.lg-slide{display:none;padding:12px 14px 70px}
+.lg-slide img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px;display:block}  /* SLIDE IMAGE */
+.lg-slide .lg-tag{font-size:14px;color:#cfcfcf;margin:40px 0 10px 14px}
+.lg-slide h2{font-size:28px;line-height:1.2;font-weight:600;max-width:600px;margin:0 14px 14px}
+.lg-slide p{font-size:14px;line-height:1.5;color:#e4e4e4;max-width:440px;margin:0 14px 24px}
+.lg-slide .lg-more{display:inline-block;margin-left:14px;background:#1c1c1c;color:#fff;padding:12px 18px;border-radius:4px;font-weight:500}
+
+/* show the slide whose radio is checked */
+#lg-s1:checked~.lg-slide-1,
+#lg-s2:checked~.lg-slide-2,
+#lg-s3:checked~.lg-slide-3{display:block}
+
+/* bottom bar: progress line (left) + arrows (right) */
+.lg-nav{position:absolute;left:24px;right:24px;bottom:18px;display:flex;align-items:center;justify-content:space-between}
+.lg-bars{display:flex;gap:6px}
+.lg-bars i{width:90px;height:2px;background:#444}
+#lg-s1:checked~.lg-nav .lg-bars i:nth-child(1),
+#lg-s2:checked~.lg-nav .lg-bars i:nth-child(2),
+#lg-s3:checked~.lg-nav .lg-bars i:nth-child(3){background:#fff}
+.lg-arrows{display:flex;gap:10px}
+.lg-arrows label{width:24px;height:24px;border-radius:50%;background:#2a2a2a;text-align:center;line-height:24px;cursor:pointer;font-size:13px}
+.lg-arrows label:hover{background:var(--lg-blue)}
+/* only the arrows that belong to the current slide are visible */
+.lg-arrows span{display:none;gap:10px}
+#lg-s1:checked~.lg-nav .a1,#lg-s2:checked~.lg-nav .a2,#lg-s3:checked~.lg-nav .a3{display:flex}
+
+/* =========================================================
+   STEP 4 - RIGHT SIDE: the form, centred
+   ========================================================= */
+.lg-main{display:flex;align-items:center;justify-content:center;padding:32px 24px}
+.lg-form{width:100%;max-width:var(--lg-form-w);text-align:center}
+
+.lg-logo{display:inline-flex;align-items:center;gap:8px;font-size:26px;font-weight:700;color:var(--lg-text);margin-bottom:32px}
+.lg-logo img{width:28px;height:28px}                      /* LOGO (link 4) */
+.lg-form h1{font-size:20px;font-weight:600;margin-bottom:24px}
+
+.lg-btn-outline{display:flex;align-items:center;justify-content:center;gap:8px;height:38px;margin-bottom:8px;
+  border:1px solid var(--lg-line);border-radius:4px;color:var(--lg-text);font-size:13px;background:#fff}
+.lg-btn-outline:hover{background:#f5f5f5}
+.lg-btn-outline svg{width:14px;height:14px}
+
+.lg-or{display:flex;align-items:center;gap:12px;margin:22px 0;font-size:12px;color:var(--lg-muted)}
+.lg-or::before,.lg-or::after{content:"";flex:1;height:1px;background:var(--lg-line)}
+
+.lg-field{position:relative;margin-bottom:12px}
+.lg-field input{width:100%;height:38px;border:1px solid var(--lg-line);border-radius:4px;padding:0 36px 0 10px;font-size:13px}
+.lg-field input:focus{outline:none;border-color:var(--lg-blue);box-shadow:0 0 0 1px var(--lg-blue)}
+.lg-field svg{position:absolute;right:10px;top:12px;width:14px;height:14px;stroke:var(--lg-blue);fill:none}
+.lg-forgot{display:block;text-align:left;font-size:12px;margin:-2px 0 16px}
+.lg-submit{width:100%;height:38px;border:0;border-radius:4px;background:var(--lg-blue);color:#fff;font-size:14px;font-weight:500;cursor:pointer;opacity:.5}
+.lg-signup{margin-top:24px;font-size:13px;color:var(--lg-muted)}
+
+/* =========================================================
+   STEP 5 - RESPONSIVE (matches the recording)
+   Below 800px the left card disappears and the form fills
+   the screen, starting near the top instead of the middle.
+   ========================================================= */
+@media (max-width:799px){
+  .lg-page{grid-template-columns:1fr}
+  .lg-side{display:none}
+  .lg-main{align-items:flex-start;padding:64px 26px 32px}
+}
+/* between 800px and 1100px the card just shrinks; shrink its text a bit */
+@media (max-width:1100px) and (min-width:800px){
+  .lg-slide h2{font-size:22px}
+  .lg-slide .lg-tag{margin-top:24px}
+}

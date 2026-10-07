@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- This line makes the page fit phones properly -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Webflow: The agentic web platform for mordern businesses</title>
+<link rel="shortcut icon" href="./webflow images/log -n-small.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Bootstrap first, then our own style.css, so our styles win -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>body{margin:0;background:#080808;color:#fff;font-family:"Inter Tight",Arial,sans-serif}</style>
+</head>
+<body>
+  <div class="wf-nav" id="wf-nav"></div>  <!-- PLACE THIS WHERE THE NAV SHOULD APPEAR -->
+
+<script>
+window.WF_NAV_CONFIG = {
+  banner: {
+    show: true,
+    text: "The biggest announcements from Webflow Conf '26 - Read the recap ↗",
+    linkText: "Read the announcement →",
+    href: "#"
+  },
+
+  logo: { text: "Webflow", href: "/", img: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/webflow-icon.png" },   // img: put a logo image URL here (optional)
+
+  links: [   // left side of the nav
+    { label: "Platform",   menu: "platform" },
+    { label: "Source",     href: "./source.html" },
+    { label: "Solutions",  menu: "solutions" },
+    { label: "Resources",  menu: "resources" },
+    { label: "Enterprise", href: "./enterprisee.html" },
+    { label: "Pricing",    href: "./pricing.html" }
+  ],
+
+  right: [   // right side. hideSmall hides it on tablet/mobile; button makes it the blue button
+    { label: "Log in",        href: "./login.html", hideSmall: true },
+    { label: "Contact Sales", href: "#", hideSmall: true },
+    { label: "Start for free", href: "#", button: true }
+  ],
+
+  // The strip at the bottom of each mega menu ("I'm a Marketer" + appearance toggle)
+  bar: { show: true, roleLabel: "I’m a", role: "Marketer ⌄", appearanceLabel: "Appearance", icons: ["☼", "☾", "▭"], activeIcon: 2 },
+
+  menus: {
+    platform: {
+      columns: [
+        { title: "Build",   items: ["Design", "Edit content", "Interactions", "Collaboration", "Page building"] },
+        { title: "Manage",  items: ["CMS", "Hosting", "Localize", "Security", "Shared Libraries"] },
+        { title: "Convert", items: ["Analyze", "Optimize", "SEO", "AEO"] },
+        { title: "Extend",  items: ["Apps", "Figma to Webflow", "Webflow Cloud", "DevLink", "MCP"] }
+      ],
+      cards: { layout: "row", items: [        // "row" = two wide cards under the columns
+        { title: "Platform Overview", text: "Explore the power of the Webflow platform", bg: "linear-gradient(100deg,#146ef5,#0a3fb0)", href: "#" },
+        { title: "Webflow AI", text: "Elevate web experiences with the power of AI", bg: "linear-gradient(100deg,#111,#10224a)", href: "#" }
+      ]}
+    },
+    solutions: {
+      columns: [
+        { title: "Marketing",         items: ["Brand", "Performance", "Digital Experience", "Ops"] },
+        { title: "Engineering",       items: ["Engineering leaders", "Developers"] },
+        { title: "Service Providers", items: ["Agencies", "Freelancers", "Global Alliances"] }
+      ],
+      cards: { layout: "side", items: [       // "side" = stacked cards in the 4th column
+        { title: "Enterprise", text: "Advanced collaboration workflows and enterprise-grade scalability.", bg: "linear-gradient(135deg,#dfe8ff,#fff)", color: "#333", titleColor: "#111", href: "#" },
+        { title: "AEO", text: "Show up in AI-driven search with the power of Webflow.", bg: "linear-gradient(135deg,#150a3a,#6a2fd0)", href: "#" }
+      ]}
+    },
+    resources: {
+      columns: [
+        { title: "Get started", items: ["Templates", "Made in Webflow", "Hire a Certified Partner", "Developers"] },
+        { title: "Learn",       items: ["Webflow University", "Blog", "Webinars & ebooks", "The Webflow Way"] },
+        { title: "Discover",    items: ["Customer stories", "Our Community", "Partner with Webflow", "AEO Assessment"] },
+        { title: "Get help",    items: ["Support", "Join the Community"] }
+      ]
+    }
+  }
+};
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var C = window.WF_NAV_CONFIG, root = document.getElementById('wf-nav');
+  var it = function (x) { return typeof x === 'string' ? { label: x, href: '#' } : Array.isArray(x) ? { label: x[0], href: x[1] || '#' } : x; };
+
+  // banner + nav bar
+  var h = '';
+  if (C.banner && C.banner.show) h += '<div class="banner">' + C.banner.text + ' <a href="' + C.banner.href + '">&nbsp;' + C.banner.linkText + '</a></div>';
+  var logo = C.logo;
+  h += '<nav><div class="wrap"><div class="l"><a class="logo" href="' + logo.href + '">' + (logo.img ? '<img src="' + logo.img + '" alt="">' : '') + logo.text + '</a>' +
+    '<span class="nav-links l">' + C.links.map(function (l) { return '<a href="' + (l.href || '#') + '"' + (l.menu ? ' data-m="' + l.menu + '"' : '') + '>' + l.label + '</a>'; }).join('') + '</span></div>' +
+    '<div class="r">' + C.right.map(function (r) { return '<a class="' + (r.button ? 'btn ' : '') + (r.hideSmall ? 'hide-s' : '') + '" href="' + r.href + '">' + r.label + '</a>'; }).join('') + '</div></div>' +
+    '<div class="mg" id="wf-mg"></div></nav><div class="scrim" id="wf-scrim"></div>';
+  root.innerHTML = h;
+
+  // mega menu builder
+  var bar = function () {
+    var b = C.bar; if (!b || !b.show) return '';
+    return '<div class="bar"><span>' + b.roleLabel + ' <button class="sel">' + b.role + '</button></span><span>' + b.appearanceLabel + ' ' +
+      b.icons.map(function (ic, i) { return '<i class="ib' + (i === b.activeIcon ? ' on' : '') + '">' + ic + '</i>'; }).join('') + '</span></div>';
+  };
+  var card = function (c) { return '<a class="mc" href="' + (c.href || '#') + '" style="background:' + c.bg + (c.color ? ';color:' + c.color : '') + '"><b' + (c.titleColor ? ' style="color:' + c.titleColor + '"' : '') + '>' + c.title + '</b>' + c.text + '</a>'; };
+  var build = function (m) {
+    var s = m.columns.map(function (col) {
+      return '<div><h5>' + col.title + '</h5><ul>' + col.items.map(function (x) { x = it(x); return '<li><a href="' + x.href + '">' + x.label + '</a></li>'; }).join('') + '</ul></div>';
+    }).join('');
+    if (m.cards) s += '<div class="' + (m.cards.layout === 'side' ? 'side' : 'cards') + '">' + m.cards.items.map(card).join('') + '</div>';
+    return s + bar();
+  };
+
+  // hover behaviour
+  var mg = document.getElementById('wf-mg'), sc = document.getElementById('wf-scrim'), nav = root.querySelector('nav'),
+      links = [].slice.call(root.querySelectorAll('.nav-links a')), tm;
+  function close() { mg.classList.remove('open'); sc.classList.remove('on'); links.forEach(function (a) { a.classList.remove('act'); }); }
+  links.forEach(function (a) {
+    a.addEventListener('mouseenter', function () {
+      clearTimeout(tm); var k = a.dataset.m;
+      if (!k) { close(); return; }
+      mg.innerHTML = '<div class="wrap">' + build(C.menus[k]) + '</div>';
+      mg.classList.add('open'); sc.classList.add('on');
+      links.forEach(function (x) { x.classList.toggle('act', x === a); });
+    });
+    a.addEventListener('click', function (e) { if (a.dataset.m) e.preventDefault(); });
+  });
+  nav.addEventListener('mouseleave', function () { tm = setTimeout(close, 120); });
+  nav.addEventListener('mouseenter', function () { clearTimeout(tm); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+});
+</script>
+
+    <section class="hero">
+
+
+      <div class="d-flex flex-column flex-lg-row justify-content-between">
+            <div>
+                <h1>Build for what's next</h1>
+                <p>Webflow gives every team the tools to build, manage,<br>and grow a website that drives real revenue.</p>
+                <div class="d-flex gap-2 mt-4"><a class="btn wf-blue btn-lg">Get started</a><a class="btn wf-grey btn-lg">Talk to Sales</a></div>
+            </div>
+            <div class="align-self-lg-end mt-3">What 
+                <span class="pill">marketing teams ▼</span> love about Webflow</div>
+      </div>
+         
+
+        <!-- marquee -->
+
+        <div class="marquee">
+            <div class="marquee-track">
+
+                <div class="m1-card">
+                    <button class="btnn">
+                        <img src="./webflow images/1.webp" alt="">
+                        <p>
+                            <strong>2x</strong><br>
+                            <small>Faster web builds</small>
+                        </p>
+                    </button>
+                </div>
+
+                <div class="m2-card">
+                    <button class="btnn">
+                        <img src="./webflow images/2.webp" alt="">
+                        <p>Create rich interactions and <br>animations powered bu GSAP</p>
+                    </button>
+                </div>
+
+                <div class="m3-card">
+                    <button class="btnn">
+                        <img src="./webflow images/3.webp" alt="">
+                        <p>Focus on craft while AI handles <br> the repititive work</p>
+                    </button>
+                </div>
+
+                <div class="m4-card">
+                    <button class="btnn">
+                        <img src="./webflow images/4.webp" alt="">
+                        <p>Keep every page on brand at <br> scale with Shared Libraries </p>
+                    </button>
+                </div>
+
+                <div class="m5-card">
+
+                    <button class="btnn">
+                        <img src="./webflow images/5.webp" alt="">
+                        <p>
+                            <h2>49.5%</h2>
+                            <small>reduction in development time</small>
+                        </p>
+                    </button>
+                </div>
+
+                <div class="m6-card">
+                    <button class="btnn">
+                        <img src="./webflow images/6.webp" alt="">
+                        <p>Manage edits with branching <br>and publishing workflows</p>
+                    </button>
+                </div>
+
+                <div class="m7-card">
+                    <button class="btnn">
+                        <img src="./webflow images/7.webp" alt="">
+                        <p>Optimize for cnversations with AI-<br> powered personalization</p>
+                    </button>
+                </div>
+
+                <div class="m8-card">
+                    <button class="btnn">
+                        <img src="./webflow images/8.webp" alt="">
+                        <p>Build with pixel-perfect <br>precision</p>
+                    </button>
+                </div>
+                
+                <!-- CARD SET 2 - DUPLICATE FOR LOOP -->
+                
+                <div class="m1-card">
+                    <button class="btnn">
+                        <img src="./webflow images/1.webp" alt="">
+                        <p>
+                            <strong>2x</strong><br>
+                            <small>Faster web builds</small>
+                        </p>
+                    </button>
+                </div>
+
+                <div class="m2-card">
+                    <button class="btnn">
+                        <img src="./webflow images/2.webp" alt="">
+                        <p>Create rich interactions and <br>animations powered bu GSAP</p>
+                    </button>
+                </div>
+
+                <div class="m3-card">
+                    <button class="btnn">
+                        <img src="./webflow images/3.webp" alt="">
+                        <p>Focus on craft while AI handles <br> the repititive work</p>
+                    </button>
+                </div>
+
+                <div class="m4-card">
+                    <button class="btnn">
+                        <img src="./webflow images/4.webp" alt="">
+                        <p>Keep every page on brand at <br> scale with Shared Libraries </p>
+                    </button>
+                </div>
+
+                <div class="m5-card">
+
+                    <button class="btnn">
+                        <img src="./webflow images/5.webp" alt="">
+                        <p>
+                            <h2>49.5%</h2>
+                            <small>reduction in development time</small>
+                        </p>
+                    </button>
+                </div>
+
+                <div class="m6-card">
+                    <button class="btnn">
+                        <img src="./webflow images/6.webp" alt="">
+                        <p>Manage edits with branching <br>and publishing workflows</p>
+                    </button>
+                </div>
+
+                <div class="m7-card">
+                    <button class="btnn">
+                        <img src="./webflow images/7.webp" alt="">
+                        <p>Optimize for cnversations with AI-<br> powered personalization</p>
+                    </button>
+                </div>
+
+                <div class="m8-card">
+                    <button class="btnn">
+                        <img src="./webflow images/8.webp" alt="">
+                        <p>Build with pixel-perfect <br>precision</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="logo-wall">
+        <div class="logo-q">
+                
+            <div>
+                <img src="https://dhygzobemt712.cloudfront.net/Web/logos/light/verifone.svg" alt="verifone">
+            </div>
+
+            <div>
+                <img src="https://dhygzobemt712.cloudfront.net/Web/logos/light/abm.svg" alt="ABM"> 
+            </div>
+
+            <div>
+                <img src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/68c9a39c128261b2128439c8_monday.com.svg" alt="monday.com" style="filter: brightness(0) invert(1);">
+            </div>
+
+            <div>
+                <img src="https://dhygzobemt712.cloudfront.net/Web/logos/light/spotify.svg" alt="spotify">
+            </div>
+
+            <div>
+                <img src="https://dhygzobemt712.cloudfront.net/Web/logos/light/ted.svg" alt="TED">
+            </div>
+
+            <div>
+                <img src="https://dhygzobemt712.cloudfront.net/Web/logos/light/dropbox.svg" alt="Dropbox">
+            </div>
+
+            <div>
+                <img src="https://dhygzobemt712.cloudfront.net/Web/logos/light/greenhouse.svg" alt="greenhouse">
+            </div>
+
+            <div>
+                <img src="https://dhygzobemt712.cloudfront.net/Web/logos/light/clear.svg" alt="clear">
+            </div>
+            
+            <div>
+                <img src="https://dhygzobemt712.cloudfront.net/Web/logos/light/orangetheory.svg" alt="orangetheory">
+            </div>
+            
+            <div>
+                <img src="https://dhygzobemt712.cloudfront.net/Web/logos/light/soundcloud.svg" alt="soundcloud">
+            </div>
+            
+            <div>
+                <img src="https://dhygzobemt712.cloudfront.net/Web/logos/light/reddit.svg" alt="reddit">
+            </div>
+            
+            <div>
+                <img src="https://dhygzobemt712.cloudfront.net/Web/logos/light/discord.svg" alt="discord">
+            </div>
+            
+            <div>
+                <img src="https://dhygzobemt712.cloudfront.net/Web/logos/light/checkout.svg" alt="checkout.com">
+            </div>
+            
+            <div>
+                <img src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/68c9a39c128261b2128439dc_ideo-logo.svg" alt="IDEO" style="filter: brightness(0) invert(1);">
+            </div>
+            
+            <div>
+                <img src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/68c9a39c128261b2128439d9_nytimes.svg" alt="The Newyork Times" style="filter: brightness(0) invert(1);">
+            </div>
+            
+            <div>
+                <img src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/68c9a39c128261b2128439c9_Docusign-dark.svg" alt="docusign" style="filter: brightness(0) invert(1);">
+            </div>
+        </div>
+        
+    </section>
+    
+    
+    <section class="video-play">
+
+        <div  class="first-line">
+            <p>Introducing</p>
+            <h1>Source</h1>
+            <p>by Webflow</p>
+        </div>
+
+        <div class="second-line">
+            <div>
+                <img src="./webflow images/6a8e97f9b69a6694cd66b1dd_home-source-bg-p-1600.webp" class="img-a" alt="">
+            </div>
+
+            <div>
+                <img src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8c3808cb5f764852177b59_48241cbaffbe02788ea715d1c85e9913_source-hero.webp" alt="" class="img-b">
+            </div>
+        </div>
+
+        <div class="lower-btn">
+     
+            <button class="play-btn" onclick="document.getElementById('vid').style.display='flex'">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+       
+            </button>
+
+            <a href="https://www.youtube.com/embed/aYC4SMVspD4" class="a-link"> Watch Launch video
+                <!-- <div id="vid" class="video-overlay">            
+                    <iframe src="https://www.youtube.com/embed/aYC4SMVspD4" 
+                        title="Watch Launch Video"
+                        frameborder="0"
+                        allow="autoplay; encryted-media;"
+                        allowfullscreen>
+                    </iframe>
+                </div> -->
+            </a>
+        </div>
+    </section>
+
+    <section class="teams-section">
+        <div class="container teams-grid">
+    
+            <div class="teams-left">
+                <div class="teams-header">
+                    <img src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8decf74a5b39c6e254be2a_b72e9e5dd945d5304080e1532cc857be_wf_source_logo_img_1.webp" alt="Source" class="teams-logo">
+                        <h2>Where modern teams<br>and agents run the web</h2>
+                </div>
+                <a href="#" class="btn-blue">Explore Source</a>
+            </div>
+
+            <ul class="teams-list">
+                <li>
+                    <span class="icon">◈</span>
+                    <p>Connect any codebase and your existing stack.</p>
+                </li>
+                <li>
+                    <span class="icon">◫</span>
+                    <p>Build agentically or visually.</p>
+                </li>
+                <li>
+                    <span class="icon">▤</span>
+                    <p>Customize workspaces for every team member.</p>
+                </li>
+                <li>
+                    <span class="icon">✦</span>
+                    <p>Orchestrate a team of always-on agents.</p>
+                </li>
+            </ul>
+
+        </div>
+    </section>
+
+
+    <section class="brands">
+        <div class="container-b">
+            <div class="brands-head">
+                <h2>300,000+ brands move<br>the needle with Webflow</h2>
+                <div class="pointer">
+                    <button id="prev">←</button>
+                    <button id="next">→</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-viewport">
+            <div class="carousel-track" id="track">
+
+                            <!-- CARD 1 -->
+                <div class="card">
+                    <img src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/696fe69ed48d51a111c2baa2_customer-stories_verifone.avif" class="card-bg" alt="">
+                    <video class="card-video" muted loop playsinline preload="metadata">
+                        <source src="https://www.youtube.com/embed/Pp1KqU7swGg" type="video/mp4">
+                    </video>
+                    <div class="card-logo"><img src="https://dhygzobemt712.cloudfront.net/Web/logos/light/verifone.svg" alt="verifone"></div>
+                    <div class="pause-badge">❚❚</div>
+                    <div class="card-content">
+                        <h3>32</h3>
+                        <p class="label">global sites launched in 10 days</p>
+                        <p class="quote">"With Webflow, we're not just keeping up, we're setting the pace. It's the speedboat that's helping us move faster than ever before."</p>
+                        <p class="author">Rob Alfano<br><span>VP of Digital Marketing</span></p>
+                    </div>
+                </div>
+
+                                       <!-- CARD 2 -->
+                <div class="card">
+                    <img src="https://cdn.prod.website-files.com/687e8d1b96312cc631cafec7/68b065e3cee20f75820054b6_feature-image-lattice.webp" class="card-bg" alt="">
+                    <video class="card-video" muted loop playsinline preload="metadata">
+                        <source src="lattice-video.mp4" type="video/mp4">
+                    </video>
+                    <div class="card-logo"><img src="https://dhygzobemt712.cloudfront.net/Web/logos/light/lattice.svg" alt="Lattice"></div>
+                    <div class="pause-badge">❚❚</div>
+                    <div class="card-content">
+                        <h3>20%</h3>
+                        <p class="label">Increase in site-wide conversion</p>
+                        <p class="quote">"With Webflow, we've significantly improved organic traffic, SEO, and conversions.From my perspective as CMO, that's huge wiin because our brand is reaching more people."</p>
+                        <p class="author">Elizabeth Walton Egan<br><span>CMO</span></p>
+                    </div>
+                </div>
+
+                                            <!-- CARD 3 - duplicate pattern for rest -->
+                <div class="card">
+                    <img src="https://cdn.prod.website-files.com/687e8d1b96312cc631cafec7/68b9969033c7fa0eb2c29c2f_feature-image-orangetheory.webp" class="card-bg" alt="">
+                    <video class="card-video" muted loop playsinline preload="metadata">
+                        <source src="orangetheory-video.mp4" type="video/mp4">
+                    </video>
+                    <div class="card-logo"><img src="https://dhygzobemt712.cloudfront.net/Web/logos/light/orangetheory.svg" alt="Orangetheory"></div>
+                    <div class="pause-badge">❚❚</div>
+                    <div class="card-content">
+                        <h3>$6M</h3>
+                        <p class="label">in cost savings annually</p>
+                        <p class="quote">"We're saving upwards of $6 million a year with Webflow, and we've reinvested those savings in other areas like website optimization and localization... that's been really powerful"</p>
+                        <p class="author">Malcolm Greene<br><span>Chief Information Officer</span></p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="https://cdn.prod.website-files.com/687e8d1b96312cc631cafec7/68b065e3cee20f75820054a0_feature-image-fivetran.webp" class="card-bg" alt="">
+                    <video class="card-video" muted loop playsinline preload="metadata">
+                        <source src="orangetheory-video.mp4" type="video/mp4">
+                    </video>
+                    <div class="card-logo"><img src="https://dhygzobemt712.cloudfront.net/Web/logos/light/fivetran.svg" alt="fivetran"></div>
+                    <div class="pause-badge">❚❚</div>
+                    <div class="card-content">
+                        <h3>98%</h3>
+                        <p class="label">Increase in speed to market</p>
+                        <p class="quote">"With Webflow Enterprise, we're able to move with trust ad confidence that hings will get done quickly without compromising our brand or draining resources."</p>
+                        <p class="author">Cat Origitano<br><span>VP of Product & Portfolio Marketing</span></p>
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <img src="https://cdn.prod.website-files.com/687e8d1b96312cc631cafec7/68b065e3cee20f75820054b9_feature-image-walkerdunlop.webp" class="card-bg" alt="">
+                    <video class="card-video" muted loop playsinline preload="metadata">
+                        <source src="orangetheory-video.mp4" type="video/mp4">
+                    </video>
+                    <div class="card-logo"><img src="https://dhygzobemt712.cloudfront.net/Web/logos/light/walker-dunlop.svg" alt="walkerdunlop"></div>
+                    <div class="pause-badge">❚❚</div>
+                    <div class="card-content">
+                        <h3>56%</h3>
+                        <p class="label">Increase in form fills</p>
+                        <p class="quote">"Webflow empowers us to do what we do best as marketers, designers, and content creators: It strips away the technical complexity and unleashes us to be creative, try new things, and iterate quickly"</p>
+                        <p class="author">Kokko Tso<br><span>VP Digital Marketing</span></p>
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <img src="https://cdn.prod.website-files.com/687e8d1b96312cc631cafec7/68bf1a67e66e34b3ddf5712e_author_carla-weis.webp" class="card-bg" alt="">
+                    <video class="card-video" muted loop playsinline preload="metadata">
+                        <source src="orangetheory-video.mp4" type="video/mp4">
+                    </video>
+                    <div class="card-logo"><img src="https://dhygzobemt712.cloudfront.net/Web/logos/light/docusign.svg" alt="docusign"></div>
+                    <div class="pause-badge">❚❚</div>
+                    <div class="card-content">
+                        <h3>1,170%</h3>
+                        <p class="label">increase in traffic YoY</p>
+                        <p class="quote">"Webflow doesn't jut allow you to work faster and esier, but diffferently. Speed is huge, but once you get engineers, designers, and copywriters to really enjoy working together, that's something different."</p>
+                        <p class="author">Carla Weis<br><span>VP, Brand & Creative</span></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="last">
+            <p>Let's talk about what your website could be doing for your business. <a href="#">Talk to sales -></a></p>
+        </div>
+    </section>
+
+
+    <section class="scale-section">
+        <div class="scale-inner">
+    
+                          <!-- TOP ROW -->
+            <div class="scale-grid">
+                <div class="scale-left">
+                    <h2>Scale your creative<br>output without<br>compromise</h2>
+                    <p class="sub">Learn more about how design teams are launching modern, engaging web experiences at scale with Webflow.</p>
+        
+                    <form class="lead-form">
+                        <div class="field-row">
+                            <div class="field">
+                                <label>Business email</label>
+                                <input type="email" placeholder="Work Email">
+                            </div>
+                            <div class="field">
+                                <label>First name</label>
+                                <input type="text" placeholder="First Name">
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field">
+                                <label>Last name</label>
+                                <input type="text" placeholder="Last Name">
+                            </div>
+                            <div class="field">
+                                <label>Company</label>
+                                <input type="text" placeholder="Company Name">
+                            </div>
+                        </div>
+                       <div class="field-row">
+                            <div class="field">
+                                <label>Title</label>
+                                <input type="text" placeholder="Job Title">
+                            </div>
+                            <div class="field">
+                                <label>Phone Number</label>
+                                <input type="tel" placeholder="Phone Number">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-blue">Contact sales</button>
+                        <p class="fine">By submitting this form, you agree to Webflow's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></p>
+                    </form>
+                </div>
+
+                <div class="scale-right">
+                                         <!-- use URL directly -->
+                    <img src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8e9d1ac4fcd41aac68b164_home-source-form-p-1080.webp" alt="Design preview">
+                </div>
+            </div>
+
+                                    <!-- BOTTOM ROW -->
+            <div class="updates">
+                <h3>Recent updates</h3>
+                <div class="updates-grid">
+                    <a href="#" class="update-card">
+                        <span class="tag">Blog</span>
+                        <h4>The biggest announcements from Webflow Conf '26</h4>
+                        <img src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a996a2c9dd6416906bbc667_Everything%20we%20launched%20at%20Webflow.avif" alt="">
+                    </a>
+                    <a href="#" class="update-card">
+                        <span class="tag">Blog</span>
+                        <h4>For the builders: canvas, CMS, and quality-of-life improvements</h4>
+                        <img src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a996a7b53d35426e24efd70_Builder%20keynote%20summary.avif" alt="">
+                    </a>
+                    <a href="#" class="update-card">
+                        <span class="tag">Webflow Conf</span>
+                        <h4>Watch a replay of the opening keynote</h4>
+                        <img src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a996c2ea3f6f75dcd8b1ada_webflow-conf_keynote.avif" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  
+    <a class="badge-b" href="#">
+        <i>
+            <img src="./webflow images/log -n-small.png" alt="" class="i-img">
+        </i>Made in Webflow
+    </a>
+
+    
+    <section class="made-section">
+        <h2>#MadeinWebflow</h2>
+        <div class="made-track">
+    
+            <a href="#" class="made-card">
+                <img src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/68c9a39c128261b2128439e5_webflow-tablet.webp" alt="">
+            </a>
+
+            <a href="#" class="made-card">
+                <img src="https://cdn.prod.website-files.com/687e8d1b96312cc631cafec7/6a904cdb0f76d625a477188f_agency-d-2.webp" alt="">
+                
+            </a>
+
+            <a href="#" class="made-card">
+                <img src="https://cdn.prod.website-files.com/687e8d1b96312cc631cafec7/6a905e3d65aea1ac0ef17856_et-d-2.webp" alt="">
+                
+            </a>
+
+            <a href="#" class="made-card">
+                <img src="https://cdn.prod.website-files.com/687e8d1b96312cc631cafec7/6a9050c7c27dfdf1e85f0550_agency-d-4.webp" alt="">
+                
+            </a>
+
+            <a href="#" class="made-card">
+                <img src="https://cdn.prod.website-files.com/687e8d1b96312cc631cafec7/6ab6a50c894e95e5b042ff40_home-slider_engineers_arkose.webp" alt="">
+                
+            </a>
+
+            <a href="#" class="made-card">
+                <img src="https://cdn.prod.website-files.com/687e8d1b96312cc631cafec7/6ab41f1d313d04762a8d29b1_home-slider_design_page-building.webp" alt="">
+                
+            </a>
+
+            <a href="#" class="made-card">
+                <img src="https://cdn.prod.website-files.com/687e8d1b96312cc631cafec7/6a906f999b9f0d3f8b8cd5e2_home-dialog_designers_amazon.webp" alt="">
+                
+            </a>
+
+            <a href="#" class="made-card">
+                <img src="https://cdn.prod.website-files.com/687e8d1b96312cc631cafec7/6a90647fc1218a9b03527086_home-dialog_engineers_hosting.webp" alt="">
+                
+            </a>
+
+
+        </div>
+    </section>
+
+
+<!-- =====================================================================
+     EDIT YOUR CONTENT HERE
+     - A link is "Label"  or  ["Label","/url"]  or  ["Label","/url","badge"]
+       (badge shows as a small blue tag, e.g. "new", "Labs")
+     - columns = 4 columns on desktop; each column holds one or more groups
+     ===================================================================== -->
+<script>
+window.WF_FOOTER_CONFIG = {
+  copyright: "© 2026 Webflow, Inc. All rights reserved",
+
+  columns: [
+    [ { title: "Source by Webflow", links: ["Research preview"] },
+      { title: "Product", links: ["Platform","Design","Edit content","Interactions","GSAP","Page building","Shared Libraries","Collaboration","CMS","Hosting","Localize","Security","Ecommerce","Analyze","Optimize","SEO",["MCP","#","new"],["AEO","#","new"],"Webflow Cloud",["DevLink","#","Labs"],["Figma to Webflow","#","Labs"],"Accessibility","AI"] } ],
+    [ { title: "Solutions", links: ["Enterprise","Global alliances","Agencies","Freelancers"] },
+      { title: "Resources", links: ["University","Blog","Customer stories","Webinars & ebooks","Apps","Libraries","Templates","Developers","Made in Webflow","Glossary","Livestreams","The Webflow Way","Business Value Calculator"] } ],
+    [ { title: "Company", links: ["About",["Careers","#","We’re hiring!"],"Press","Webflow Ventures","Webflow Shop","Terms of Service","Privacy policy","Cookie policy","Accessibility statement"] },
+      { title: "Compare", links: ["Contentful","Framer","Sitecore","Wix","WordPress"] } ],
+    [ { title: "Community", links: ["Discover the community","Partner with Webflow","Certified Partners","Become a template designer","Become an affiliate","Become a Global Leader","Find a meetup near you"] },
+      { title: "Get help", links: ["Support","Pricing","Status","Community Homebase","Wishlist"] } ]
+  ],
+
+  social: [   // [symbol/text, url, accessible name]
+    ["W","#","Webflow"], ["▶","#","YouTube"], ["X","#","X"], ["f","#","Facebook"], ["in","#","LinkedIn"], ["◎","#","Instagram"], ["♪","#","TikTok"]
+  ],
+
+  // Big W on the right. Each slide = caption + fallback background + optional image/video URL.
+  // Leave media "" to show the gradient. .mp4/.webm play as silent looping video.
+  bigW: {
+    interval: 3000,   // ms between slides while hovering
+    slides: [
+      { caption: "Duracell Coppertop Optimum", bg: "linear-gradient(120deg,#8a8a8e,#b8641e 55%,#4a2208)", media: "https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/68b89b6bc974abdca78db913_interactions_miw-slider_cloneable-asset_08.webp" },
+      { caption: "Together",   bg: "linear-gradient(160deg,#3a1fd0,#1a0a60 70%)", media: "https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/68b9a05cd703a66b0e92c61d_design_miw_sites_02.avif" },
+      { caption: "Bli…",       bg: "linear-gradient(160deg,#d83a3a,#a01a1a)",     media: "https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/68b8544804f09c2ea80de421_d9be4457075c7b43f46648f9470ebe50_interactions-hero-09.avif" },
+      { caption: "",           bg: "repeating-linear-gradient(90deg,#fff 0 24px,#7fe0d8 24px 48px)", media: "https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/68b9a05cc4e511863b3de078_design_miw_sites_04.avif" },
+      { caption: "take time",  bg: "linear-gradient(160deg,#f2542a,#f09a1a)",     media: "https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/68b8544827ddb0ac640381e8_2f37143fccefde0915d24c72a5a15da7_interactions-hero-05.avif" }
+    ]
+  }
+};
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var C = window.WF_FOOTER_CONFIG, root = document.getElementById('wf-footer');
+  var lk = function (x) {
+    if (typeof x === 'string') x = [x, '#'];
+    return '<li><a href="' + (x[1] || '#') + '">' + x[0] + '</a>' + (x[2] ? '<em>' + String(x[2]).toUpperCase() + '</em>' : '') + '</li>';
+  };
+
+  root.innerHTML =
+    '<div class="wrap"><div class="cols">' +
+    C.columns.map(function (col) {
+      return '<div>' + col.map(function (g) { return '<div class="gp"><h4>' + g.title + '</h4><ul>' + g.links.map(lk).join('') + '</ul></div>'; }).join('') + '</div>';
+    }).join('') +
+    '</div><div class="low"><span>' + C.copyright + '</span><div class="soc">' +
+    C.social.map(function (s) { return '<a href="' + s[1] + '" aria-label="' + (s[2] || s[0]) + '">' + s[0] + '</a>'; }).join('') +
+    '</div></div></div><div class="ft-w" id="wf-ftW" aria-label="Webflow"></div>';
+
+  // big W slides
+  var fw = document.getElementById('wf-ftW'), S = C.bigW.slides, wi = -1, wt;
+  fw.innerHTML = S.map(function (s) { return '<div class="wsl" style="background:' + s.bg + '">' + s.caption + '<div class="pr">01<i></i>02</div></div>'; }).join('');
+
+  // apply image / video links
+  [].forEach.call(fw.children, function (host, i) {
+    var u = S[i].media; if (!u) return;
+    var isVid = /\.(mp4|webm|mov)(\?|$)/i.test(u), e = document.createElement(isVid ? 'video' : 'img');
+    e.src = u; e.className = 'mi';
+    if (isVid) { e.muted = true; e.loop = true; e.autoplay = true; e.playsInline = true; e.setAttribute('playsinline', ''); e.play && e.play().catch(function () {}); }
+    else e.alt = '';
+    host.insertBefore(e, host.firstChild); host.classList.add('hide-ph');
+  });
+
+  function show() { wi = (wi + 1) % S.length; [].forEach.call(fw.children, function (c, i) { c.classList.toggle('cur', i === wi); }); }
+  fw.addEventListener('mouseenter', function () { fw.classList.add('on'); show(); wt = setInterval(show, C.bigW.interval || 3000); });
+  fw.addEventListener('mouseleave', function () { fw.classList.remove('on'); clearInterval(wt); });
+});
+</script>
+
+<footer class="wf-ft" id="wf-footer"></footer>   <!-- PLACE THIS WHERE THE FOOTER SHOULD APPEAR -->
+
+
+</body>
+</html>

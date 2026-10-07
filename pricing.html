@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plans & Pricing|Webflow</title>
+    <link rel="stylesheet" href="pricing.css">
+    <link rel="shortcut icon" href="./webflow images/log -n-small.png" type="image/x-icon">
+
+</head>
+<body>
+    <div class="wf-nav" id="wf-nav"></div>  <!-- PLACE THIS WHERE THE NAV SHOULD APPEAR -->
+
+<script>
+window.WF_NAV_CONFIG = {
+
+  logo: { text: "Webflow", href: "/", img: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/webflow-icon.png" },   // img: put a logo image URL here (optional)
+
+  links: [   // left side of the nav
+    { label: "Platform",   menu: "platform" },
+    { label: "Source",     href: "./source.html" },
+    { label: "Solutions",  menu: "solutions" },
+    { label: "Resources",  menu: "resources" },
+    { label: "Enterprise", href: "./enterprisee.html" },
+    { label: "Pricing",    href: "./index.html" }
+  ],
+
+  right: [   // right side. hideSmall hides it on tablet/mobile; button makes it the blue button
+    { label: "Log in",        href: "./login.html", hideSmall: true },
+    { label: "Contact Sales", href: "#", hideSmall: true },
+    { label: "Start for free", href: "#", button: true }
+  ],
+
+  // The strip at the bottom of each mega menu ("I'm a Marketer" + appearance toggle)
+  bar: { show: true, roleLabel: "I’m a", role: "Marketer ⌄", appearanceLabel: "Appearance", icons: ["☼", "☾", "▭"], activeIcon: 2 },
+
+  menus: {
+    platform: {
+      columns: [
+        { title: "Build",   items: ["Design", "Edit content", "Interactions", "Collaboration", "Page building"] },
+        { title: "Manage",  items: ["CMS", "Hosting", "Localize", "Security", "Shared Libraries"] },
+        { title: "Convert", items: ["Analyze", "Optimize", "SEO", "AEO"] },
+        { title: "Extend",  items: ["Apps", "Figma to Webflow", "Webflow Cloud", "DevLink", "MCP"] }
+      ],
+      cards: { layout: "row", items: [        // "row" = two wide cards under the columns
+        { title: "Platform Overview", text: "Explore the power of the Webflow platform", bg: "linear-gradient(100deg,#146ef5,#0a3fb0)", href: "#" },
+        { title: "Webflow AI", text: "Elevate web experiences with the power of AI", bg: "linear-gradient(100deg,#111,#10224a)", href: "#" }
+      ]}
+    },
+    solutions: {
+      columns: [
+        { title: "Marketing",         items: ["Brand", "Performance", "Digital Experience", "Ops"] },
+        { title: "Engineering",       items: ["Engineering leaders", "Developers"] },
+        { title: "Service Providers", items: ["Agencies", "Freelancers", "Global Alliances"] }
+      ],
+      cards: { layout: "side", items: [       // "side" = stacked cards in the 4th column
+        { title: "Enterprise", text: "Advanced collaboration workflows and enterprise-grade scalability.", bg: "linear-gradient(135deg,#dfe8ff,#fff)", color: "#333", titleColor: "#111", href: "#" },
+        { title: "AEO", text: "Show up in AI-driven search with the power of Webflow.", bg: "linear-gradient(135deg,#150a3a,#6a2fd0)", href: "#" }
+      ]}
+    },
+    resources: {
+      columns: [
+        { title: "Get started", items: ["Templates", "Made in Webflow", "Hire a Certified Partner", "Developers"] },
+        { title: "Learn",       items: ["Webflow University", "Blog", "Webinars & ebooks", "The Webflow Way"] },
+        { title: "Discover",    items: ["Customer stories", "Our Community", "Partner with Webflow", "AEO Assessment"] },
+        { title: "Get help",    items: ["Support", "Join the Community"] }
+      ]
+    }
+  }
+};
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var C = window.WF_NAV_CONFIG, root = document.getElementById('wf-nav');
+  var it = function (x) { return typeof x === 'string' ? { label: x, href: '#' } : Array.isArray(x) ? { label: x[0], href: x[1] || '#' } : x; };
+
+  // banner + nav bar
+  var h = '';
+  if (C.banner && C.banner.show) h += '<div class="banner">' + C.banner.text + ' <a href="' + C.banner.href + '">&nbsp;' + C.banner.linkText + '</a></div>';
+  var logo = C.logo;
+  h += '<nav><div class="wrap"><div class="l"><a class="logo" href="' + logo.href + '">' + (logo.img ? '<img src="' + logo.img + '" alt="">' : '') + logo.text + '</a>' +
+    '<span class="nav-links l">' + C.links.map(function (l) { return '<a href="' + (l.href || '#') + '"' + (l.menu ? ' data-m="' + l.menu + '"' : '') + '>' + l.label + '</a>'; }).join('') + '</span></div>' +
+    '<div class="r">' + C.right.map(function (r) { return '<a class="' + (r.button ? 'btn ' : '') + (r.hideSmall ? 'hide-s' : '') + '" href="' + r.href + '">' + r.label + '</a>'; }).join('') + '</div></div>' +
+    '<div class="mg" id="wf-mg"></div></nav><div class="scrim" id="wf-scrim"></div>';
+  root.innerHTML = h;
+
+  // mega menu builder
+  var bar = function () {
+    var b = C.bar; if (!b || !b.show) return '';
+    return '<div class="bar"><span>' + b.roleLabel + ' <button class="sel">' + b.role + '</button></span><span>' + b.appearanceLabel + ' ' +
+      b.icons.map(function (ic, i) { return '<i class="ib' + (i === b.activeIcon ? ' on' : '') + '">' + ic + '</i>'; }).join('') + '</span></div>';
+  };
+  var card = function (c) { return '<a class="mc" href="' + (c.href || '#') + '" style="background:' + c.bg + (c.color ? ';color:' + c.color : '') + '"><b' + (c.titleColor ? ' style="color:' + c.titleColor + '"' : '') + '>' + c.title + '</b>' + c.text + '</a>'; };
+  var build = function (m) {
+    var s = m.columns.map(function (col) {
+      return '<div><h5>' + col.title + '</h5><ul>' + col.items.map(function (x) { x = it(x); return '<li><a href="' + x.href + '">' + x.label + '</a></li>'; }).join('') + '</ul></div>';
+    }).join('');
+    if (m.cards) s += '<div class="' + (m.cards.layout === 'side' ? 'side' : 'cards') + '">' + m.cards.items.map(card).join('') + '</div>';
+    return s + bar();
+  };
+
+  // hover behaviour
+  var mg = document.getElementById('wf-mg'), sc = document.getElementById('wf-scrim'), nav = root.querySelector('nav'),
+      links = [].slice.call(root.querySelectorAll('.nav-links a')), tm;
+  function close() { mg.classList.remove('open'); sc.classList.remove('on'); links.forEach(function (a) { a.classList.remove('act'); }); }
+  links.forEach(function (a) {
+    a.addEventListener('mouseenter', function () {
+      clearTimeout(tm); var k = a.dataset.m;
+      if (!k) { close(); return; }
+      mg.innerHTML = '<div class="wrap">' + build(C.menus[k]) + '</div>';
+      mg.classList.add('open'); sc.classList.add('on');
+      links.forEach(function (x) { x.classList.toggle('act', x === a); });
+    });
+    a.addEventListener('click', function (e) { if (a.dataset.m) e.preventDefault(); });
+  });
+  nav.addEventListener('mouseleave', function () { tm = setTimeout(close, 120); });
+  nav.addEventListener('mouseenter', function () { clearTimeout(tm); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+});
+</script>
+
+<!-- =============== HERO + BILLING SWITCH =============== -->
+<section class="hero">
+  <div class="wrap"><h1>Our pricing</h1></div>
+  <div class="billing">
+    <div class="wrap">
+      <span class="off">Monthly</span>
+      <label class="switch"><input type="checkbox" checked><span></span></label>
+      <span>Yearly (Save up to 40%)</span>
+    </div>
+  </div>
+</section>
+
+<!-- =============== SITE PLANS + PLATFORM PLANS =============== -->
+<section>
+<div class="wrap">
+  <div class="plans-top">
+
+    <!-- Site plans: 3 cards -->
+    <div>
+      <h3>Site plans</h3>
+      <p>Start building with Webflow’s AI-native platform for free. Upgrade any time to unlock advanced features.</p>
+      <div class="cards c3">
+        <div class="card">
+          <div class="head">
+            <div class="name">Starter</div>
+            <div class="desc">For exploring and experimenting with Webflow.</div>
+            <div class="price"><b>Free</b></div>
+            <a class="btn" href="#">Start for free</a>
+          </div>
+          <ul class="features">
+            <li>Webflow.io domain <i class="info"></i></li>
+            <li>Limited Webflow CMS <i class="info"></i></li>
+            <li>2 static pages <i class="info"></i></li>
+            <li>1 GB bandwidth <i class="info"></i></li>
+            <li>50 form submissions <i class="info"></i></li>
+            <li>Webflow AI <i class="info"></i></li>
+            <li>MCP server <i class="info"></i></li>
+            <li>Webflow Cloud app hosting <i class="info"></i></li>
+            <li>Free Starter Workspace <i class="info"></i></li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="head">
+            <div class="name">Basic</div>
+            <div class="desc">For simple sites that don’t need a CMS.</div>
+            <div class="price"><b>$15</b> <em>/mo</em><small>billed yearly</small></div>
+            <a class="btn" href="#">Add plan</a>
+          </div>
+          <ul class="features">
+            <li>Custom domain <i class="info"></i></li>
+            <li>300 static pages <i class="info"></i></li>
+            <li>10 GB bandwidth <i class="info"></i></li>
+            <li>Unlimited form submissions <i class="info"></i></li>
+            <li>Password protection <i class="info"></i></li>
+            <li>Webflow AI <i class="info"></i></li>
+            <li>MCP server <i class="info"></i></li>
+            <li>Webflow Cloud app hosting <i class="info"></i></li>
+            <li>Free Starter Workspace <i class="info"></i></li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="head">
+            <div class="name">Premium <span class="badge">NEW</span></div>
+            <div class="desc">For content-rich sites with robust CMS and traffic needs.</div>
+            <div class="price"><b>$25</b> <em>/mo</em><small>billed yearly</small></div>
+            <a class="btn" href="#">Add plan</a>
+          </div>
+          <ul class="features">
+            <li><span class="plus">Everything in Basic, plus:</span></li>
+            <li>Webflow CMS <i class="info"></i></li>
+            <li><span><select><option>50 GB</option><option>100 GB</option><option>150 GB</option><option>250 GB</option></select>bandwidth</span><i class="info"></i></li>
+            <li>Code components <i class="info"></i></li>
+            <li>Site search <i class="info"></i></li>
+            <li>Form file upload <i class="info"></i></li>
+            <li>Well-known files <i class="info"></i></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Platform plans: 2 cards -->
+    <div>
+      <h3>Platform plans</h3>
+      <p>Curated essentials for growing organizations.</p>
+      <div class="cards cards--platform c2">
+        <div class="card">
+          <div class="head">
+            <div class="name">Team <span class="badge">NEW</span></div>
+            <div class="desc">For growing teams that need control without complexity.</div>
+            <div class="price"><b>$2,500</b> <em>/mo</em><small>Annual contract required</small></div>
+            <a class="btn" href="#">Talk to us</a>
+          </div>
+          <ul class="features">
+            <li><span class="plus">Everything in Premium, plus:</span></li>
+            <li>Site &amp; Workspace</li>
+            <li>Webflow Localize</li>
+            <li>AEO agents <i class="info"></i></li>
+            <li>Publishing workflows</li>
+            <li>Single-page publishing</li>
+            <li>Site activity log &amp; API</li>
+            <li>Foundational governance</li>
+            <li>Enhanced security &amp; compliance</li>
+            <li>Priority support</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="head">
+            <div class="name">Enterprise</div>
+            <div class="desc">For organizations who need a flexible and scalable solution.</div>
+            <div class="price"><b>Custom</b></div>
+            <a class="btn" href="#">Talk to us</a>
+          </div>
+          <ul class="features">
+            <li><span class="plus">Everything in Team, plus:</span></li>
+            <li>Enterprise-ready scale</li>
+            <li>Granular permissions</li>
+            <li>Custom roles</li>
+            <li>Advanced governance</li>
+            <li>Secure integrations</li>
+            <li>Dedicated account manager</li>
+            <li>Enhanced SLAs</li>
+            <li>Custom configurations</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note">All prices in USD, per site, plus applicable taxes added at checkout.</p>
+  <div class="actions">
+    <a class="btn btn--white" href="#">Compare all Site plans</a>
+    <a class="btn btn--white" href="#">Compare all Platform plans</a>
+  </div>
+
+  <!-- =============== ADD-ONS (tabs) =============== -->
+  <div class="addons tabs">
+    <h2>Add-ons</h2>
+    <p class="sub" style="margin:12px auto 0">Add-ons help you do more with your site.</p>
+
+    <input type="radio" name="addon" id="a-site" checked>
+    <input type="radio" name="addon" id="a-ent">
+    <div class="tablist"><label for="a-site">For Site plans</label><label for="a-ent">For Enterprise</label></div>
+
+    <div class="panels">
+      <!-- Tab 1: Site plans -->
+      <div class="panel p-site">
+        <div class="cards c4">
+          <div class="card">
+            <div class="head head--add">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path d="M3 8V4h4M17 4h4v4M21 16v4h-4M7 20H3v-4"/><circle cx="12" cy="12" r="3"/></svg>
+              <div class="name">Optimize</div>
+              <div class="desc">Maximize conversions from your site.</div>
+              <div class="price"><b>$299</b> <em>/mo</em><small>based on # of page views</small></div>
+              <a class="btn" href="#">Add Optimize</a>
+            </div>
+            <ul class="features">
+              <li><span><select><option>25,000</option><option>50,000</option></select>page views/mo</span><i class="info"></i></li>
+              <li>Up to 5 concurrent optimizations <i class="info"></i></li>
+              <li>A/B testing <i class="info"></i></li>
+              <li>Personalization <i class="info"></i></li>
+              <li>AI Optimize <i class="info"></i></li>
+              <li>Audience insights <i class="info"></i></li>
+              <li>Audience targeting <i class="info"></i></li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="head head--add">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
+              <div class="name">Analyze</div>
+              <div class="desc">Get actionable insights on your site performance.</div>
+              <div class="price"><b>$9</b> <em>/mo</em><small>based on # of sessions</small></div>
+              <a class="btn" href="#">Add Analyze</a>
+            </div>
+            <ul class="features">
+              <li><span><select><option>2,000</option><option>5,000</option></select>sessions/mo</span><i class="info"></i></li>
+              <li>Auto-captured page views, sessions, and visitors <i class="info"></i></li>
+              <li>Auto-captured click data <i class="info"></i></li>
+              <li>Site analytics overview <i class="info"></i></li>
+              <li>Page-level insights <i class="info"></i></li>
+              <li>Share insights <i class="info"></i></li>
+              <li>Integrations with consent management solutions <i class="info"></i></li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="head head--add">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg>
+              <div class="name">Localize Essential</div>
+              <div class="desc">Localize your site for audiences around the world.</div>
+              <div class="price"><b>$9</b> <em>/mo</em><small>based on # of locales</small></div>
+              <a class="btn" href="#">Add Localize</a>
+            </div>
+            <ul class="features">
+              <li><span><select><option>1</option><option>2</option></select>locales added</span><i class="info"></i></li>
+              <li>10,000 words per month <i class="info"></i></li>
+              <li>AI-powered translation <i class="info"></i></li>
+              <li>CMS localization <i class="info"></i></li>
+              <li>Static page localization <i class="info"></i></li>
+              <li>Localized SEO <i class="info"></i></li>
+              <li>Style localization <i class="info"></i></li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="head head--add">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg>
+              <div class="name">Localize Advanced</div>
+              <div class="desc">Extend to more locales and content capabilities.</div>
+              <div class="price"><b>$29</b> <em>/mo</em><small>based on # of locales</small></div>
+              <a class="btn" href="#">Add Localize</a>
+            </div>
+            <ul class="features">
+              <li><span><select><option>1</option><option>2</option></select>locales added</span><i class="info"></i></li>
+              <li>50,000 words per month <i class="info"></i></li>
+              <li>AI-powered translation <i class="info"></i></li>
+              <li>CMS localization <i class="info"></i></li>
+              <li>Static page localization <i class="info"></i></li>
+              <li>Localized SEO <i class="info"></i></li>
+              <li>Style localization <i class="info"></i></li>
+              <li>Asset localization <i class="info"></i></li>
+              <li>Localize URLs <i class="info"></i></li>
+              <li>Automatic visitor routing <i class="info"></i></li>
+            </ul>
+          </div>
+        </div>
+        <div class="promos">
+          <div class="promo promo--orange">
+            <h4>Optimize for non-Webflow sites</h4>
+            <p>Use Webflow Optimize, no matter where your site lives. Connect with our sales team to learn about pricing.</p>
+            <a href="#">Contact us →</a>
+          </div>
+          <div class="promo promo--purple">
+            <h4>Preview Localize for free</h4>
+            <p>You can try out Localize functionality for free, no matter what plan you’re on. Pay only when you’re ready to publish.</p>
+            <a href="#">Read more →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Enterprise -->
+      <div class="panel p-ent">
+        <div class="cards c3">
+          <div class="card">
+            <div class="head head--add">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path d="M3 8V4h4M17 4h4v4M21 16v4h-4M7 20H3v-4"/><circle cx="12" cy="12" r="3"/></svg>
+              <div class="name">Optimize</div>
+              <div class="desc">Maximize conversions from your site.</div>
+              <div class="contact">Contact us</div>
+              <a class="btn" href="#">Talk to sales</a>
+            </div>
+            <ul class="features">
+              <li>1M+ page views/year <i class="info"></i></li>
+              <li>Unlimited concurrent optimizations <i class="info"></i></li>
+              <li>A/B testing <i class="info"></i></li>
+              <li>Personalization features <i class="info"></i></li>
+              <li>AI Optimize <i class="info"></i></li>
+              <li>Audience insights <i class="info"></i></li>
+              <li>Audience targeting <i class="info"></i></li>
+              <li>Advanced targeting with Enhanced Match <i class="info"></i></li>
+              <li>Integration with the Webflow Enterprise platform <i class="info"></i></li>
+              <li>Integrations with ABM tools <i class="info"></i></li>
+              <li>Integrations with CRMs and marketing systems of record <i class="info"></i></li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="head head--add">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
+              <div class="name">Analyze</div>
+              <div class="desc">Get actionable insights on your site performance.</div>
+              <div class="contact">Contact us</div>
+              <a class="btn" href="#">Talk to sales</a>
+            </div>
+            <ul class="features">
+              <li>1 million+ page views/year <i class="info"></i></li>
+              <li>Auto-captured page views and visitors <i class="info"></i></li>
+              <li>Auto-captured click data <i class="info"></i></li>
+              <li>Site analytics overview <i class="info"></i></li>
+              <li>Page-level insights <i class="info"></i></li>
+              <li>Share insights <i class="info"></i></li>
+              <li>Integrations with consent management solutions <i class="info"></i></li>
+              <li>AEO analytics <i class="info"></i></li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="head head--add">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg>
+              <div class="name">Localize</div>
+              <div class="desc">Localize your site for audiences around the world</div>
+              <div class="contact">Contact us</div>
+              <a class="btn" href="#">Talk to sales</a>
+            </div>
+            <ul class="features">
+              <li>Custom number of locales <i class="info"></i></li>
+              <li>AI-powered translation <i class="info"></i></li>
+              <li>CMS localization <i class="info"></i></li>
+              <li>Static page localization <i class="info"></i></li>
+              <li>Localized SEO <i class="info"></i></li>
+              <li>Style localization <i class="info"></i></li>
+              <li>Asset localization <i class="info"></i></li>
+              <li>Localize URLs <i class="info"></i></li>
+              <li>Automatic visitor routing <i class="info"></i></li>
+              <li>Custom element visibility <i class="info"></i></li>
+              <li>Draft locale specific static pages <i class="info"></i></li>
+              <li>Enterprise scale <i class="info"></i></li>
+              <li>Fully integrated with Webflow Enterprise <i class="info"></i></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="actions"><a class="btn btn--white" href="#">View all add-on features</a></div>
+  </div>
+</div>
+</section>
+
+<!-- =============== ECOMMERCE PLANS =============== -->
+<section class="block">
+<div class="wrap">
+  <h2 class="h-section">Ecommerce plans</h2>
+  <p class="sub">Purchase an ecommerce site plan to unlock features designed especially for online retailers.</p>
+  <div class="cards c3">
+    <div class="card">
+      <div class="head head--s">
+        <div class="name">Standard</div>
+        <div class="desc">Perfect for businesses getting off the ground.</div>
+        <div class="price"><b>$29</b> <em>/mo</em><small>billed yearly</small></div>
+        <a class="btn" href="#">Add ecommerce plan</a>
+      </div>
+      <ul class="features">
+        <li>500 ecommerce items <i class="info"></i></li>
+        <li>2% transaction fee <i class="info"></i></li>
+        <li>Custom shopping cart and checkout <i class="info"></i></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="head head--s">
+        <div class="name">Plus</div>
+        <div class="desc">Best for higher volume businesses.</div>
+        <div class="price"><b>$74</b> <em>/mo</em><small>billed yearly</small></div>
+        <a class="btn" href="#">Add ecommerce plan</a>
+      </div>
+      <ul class="features">
+        <li>5,000 ecommerce items <i class="info"></i></li>
+        <li>0% transaction fee <i class="info"></i></li>
+        <li>Custom shopping cart and checkout <i class="info"></i></li>
+        <li>Unbranded emails <i class="info"></i></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="head head--s">
+        <div class="name">Advanced</div>
+        <div class="desc">Scale your online business to new heights.</div>
+        <div class="price"><b>$212</b> <em>/mo</em><small>billed yearly</small></div>
+        <a class="btn" href="#">Add ecommerce plan</a>
+      </div>
+      <ul class="features">
+        <li>15,000 ecommerce items <i class="info"></i></li>
+        <li>0% transaction fee <i class="info"></i></li>
+        <li>Custom shopping cart and checkout <i class="info"></i></li>
+        <li>Unbranded emails <i class="info"></i></li>
+      </ul>
+    </div>
+  </div>
+  <p class="note">All prices in USD, per site, per month, plus applicable taxes added at checkout.</p>
+  <div class="actions"><a class="btn btn--white" href="#">View all plan features</a></div>
+</div>
+</section>
+
+<!-- =============== WORKSPACE PLANS (tabs) =============== -->
+<section class="block workspace">
+<div class="wrap tabs">
+  <h2 class="h-section">Workspace plans</h2>
+  <p class="sub">Every Webflow account includes a free Workspace plan. Upgrade yours at any time for enhanced staging and more collaboration tools.</p>
+
+  <input type="radio" name="ws" id="w-teams" checked>
+  <input type="radio" name="ws" id="w-free">
+  <div class="tablist"><label for="w-teams">For teams</label><label for="w-free">For freelancers &amp; agencies</label></div>
+
+  <div class="panels">
+    <div class="panel p-teams">
+      <div class="cards c3">
+        <div class="card">
+          <div class="head head--s"><div class="name">Starter</div><div class="desc">For just getting started with Webflow.</div>
+            <div class="price"><b>Free</b></div><a class="btn" href="#">Start for free</a></div>
+          <ul class="features"><li>Unlimited paid hosted sites <i class="info"></i></li><li>2 staging sites <i class="info"></i></li><li>2 pages per staged site <i class="info"></i></li><li>50 CMS items per staged site <i class="info"></i></li></ul>
+        </div>
+        <div class="card">
+          <div class="head head--s"><div class="name">Core</div><div class="desc">For more staging needs.</div>
+            <div class="price"><b>$19</b> <em>/mo</em><small>billed yearly</small></div><a class="btn" href="#">Upgrade Workspace plan</a></div>
+          <ul class="features"><li><span class="plus">Everything in Starter, plus:</span></li><li>10 staging sites <i class="info"></i></li><li>300 pages per staged site <i class="info"></i></li><li>300 AI credits <i class="info"></i></li></ul>
+        </div>
+        <div class="card">
+          <div class="head head--s"><div class="name">Growth</div><div class="desc">For unlimited staging and advanced collaboration tools.</div>
+            <div class="price"><b>$49</b> <em>/mo</em><small>billed yearly</small></div><a class="btn" href="#">Upgrade Workspace plan</a></div>
+          <ul class="features"><li><span class="plus">Everything in Core, plus:</span></li><li>Unlimited staging sites <i class="info"></i></li><li>400 AI credits <i class="info"></i></li><li>Site password protection <i class="info"></i></li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel p-free">
+      <div class="cards c3">
+        <div class="card">
+          <div class="head head--s"><div class="name">Starter</div><div class="desc">For freelancers and agencies new to Webflow.</div>
+            <div class="price"><b>Free</b></div><a class="btn" href="#">Start for free</a></div>
+          <ul class="features"><li>2 staging sites <i class="info"></i></li><li>Agency/freelancer guests <i class="info"></i></li><li>1 full seat <i class="info"></i></li><li>1 free client seat per paid site <i class="info"></i></li></ul>
+        </div>
+        <div class="card">
+          <div class="head head--s"><div class="name">Freelancer</div><div class="desc">For freelancers with a small client roster.</div>
+            <div class="price"><b>$16</b> <em>/mo</em><small>billed yearly</small></div><a class="btn" href="#">Upgrade Workspace plan</a></div>
+          <ul class="features"><li><span class="plus">Everything in Starter, plus:</span></li><li>10 staging sites <i class="info"></i></li><li>Free guest access in client Workspaces <i class="info"></i></li><li>1 free client seat per site <i class="info"></i></li></ul>
+        </div>
+        <div class="card">
+          <div class="head head--s"><div class="name">Agency</div><div class="desc">For agencies with a large client roster.</div>
+            <div class="price"><b>$35</b> <em>/mo</em><small>billed yearly</small></div><a class="btn" href="#">Upgrade Workspace plan</a></div>
+          <ul class="features"><li><span class="plus">Everything in Freelancer, plus:</span></li><li>Unlimited staging sites <i class="info"></i></li><li>3 free client seat per site <i class="info"></i></li><li>Unlimited Shared Libraries <i class="info"></i></li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note">All prices in USD, plus applicable taxes added at checkout.</p>
+  <div class="actions"><a class="btn btn--white" href="#">View all plan features</a></div>
+
+  <!-- Add seats -->
+  <h3 style="font-size:28px;font-weight:600;margin-top:70px">Add seats</h3>
+  <p class="sub" style="font-size:17px;margin-top:8px">Add unlimited team members to your Workspace.</p>
+  <div class="cards c3">
+    <div class="card"><div class="head head--xs"><div class="name">Full <span class="included">1 INCLUDED</span></div><div class="desc">Design full sites or manage admin settings.</div>
+      <div class="price"><b>$39</b> <em>/mo</em><small>per seat, billed yearly</small></div><a class="btn" href="#">Buy seats</a></div></div>
+    <div class="card"><div class="head head--xs"><div class="name">Limited</div><div class="desc">Edit content or build pages with components.</div>
+      <div class="price"><b>$15</b> <em>/mo</em><small>per seat, billed yearly</small></div><a class="btn" href="#">Buy seats</a></div></div>
+    <div class="card"><div class="head head--xs"><div class="name">Free</div><div class="desc">Invite reviewers and commenters from the team page.</div>
+      <div class="price"><b>$0</b> <em>/mo</em></div><a class="btn" href="#">Buy seats</a></div></div>
+  </div>
+
+  <!-- Add AI credits -->
+  <div class="credits">
+    <div class="left">
+      <div class="spark"></div>
+      <div>
+        <h3>Add AI credits</h3>
+        <p>Power Webflow AI feature usage across your Workspace.</p>
+        <a class="btn" href="#">Buy AI credits</a>
+      </div>
+    </div>
+    <div class="creditbox">
+      <div><b>2,000 credits/mo</b></div>
+      <div><b class="big">$20</b> <em style="font-style:normal;color:var(--muted);font-size:20px">/mo</em><small style="display:block;color:var(--muted);font-size:15px">billed yearly</small></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- =============== VERIFONE BANNER (the only image) =============== -->
+<section>
+<div class="wrap">
+  <div class="calc">
+    <div class="calc-text">
+      <h2>See the business impact of moving to Webflow</h2>
+      <p>Use this calculator to estimate the impact of Webflow’s platform on your goals — backed by real-world results.</p>
+      <a class="btn btn--inline" href="#">Use the calculator →</a>
+    </div>
+    <img class="calc-img" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/695e887fc945b678052de100_verifone-p-1080.avif" alt="Verifone website being built in Webflow">
+  </div>
+
+  <!-- Need more? -->
+  <div class="ent">
+    <div>
+      <small>Need more?</small>
+      <h2>Webflow<br>for Enterprise</h2>
+      <p>Need enterprise-grade scalability, security, and support — plus a unified dashboard for your design team?</p>
+      <a class="btn btn--inline" href="#">Talk to us</a>
+    </div>
+    <ul>
+      <li><b>Custom billing and invoicing</b>Can’t pay with a credit card? We’ll set up custom billing for your accounting team’s requirements.</li>
+      <li><b>Enterprise traffic scaling</b>Expecting lots of traffic? We can set up custom hosting clusters to ensure Webflow handles your scale.</li>
+      <li><b>Security audits and questionnaires</b>We’ll work with your team to answer security questionnaires and meet your procurement requirements.</li>
+      <li><b>MSAs and SLAs</b>We provide enterprise customers with master service agreements (MSA) and service level agreements (SLA) to guarantee compliance and uptime.</li>
+    </ul>
+  </div>
+</div>
+</section>
+
+<!-- =============== FAQ =============== -->
+<section class="faq">
+<div class="wrap">
+  <h2>Frequently<br>asked questions</h2>
+
+  <div class="faq-group">
+    <h3>Workspace and Site plans</h3>
+    <div>
+      <details><summary>What’s the difference between a Workspace and a Site plan?</summary><div>
+        <p>Every site built in Webflow automatically lives inside of a Workspace.</p>
+        <p>When you sign up for Webflow, you get a free Workspace plan by default. A Workspace is a space where you stage sites — and where you can invite teammates and clients to work on sites together. Upgrading your Workspace plan gives you access to enhanced staging capabilities and advanced collaboration features.</p>
+        <p>Site plans give you the tools to build your site. When you sign up for Webflow, you automatically get a free Starter Site plan. When you need to publish, host, or unlock additional site-building features, you can upgrade that specific site to a paid Site plan.</p></div></details>
+      <details><summary>How many Workspaces can I have?</summary><div>Workspaces are designed to be a space for you to organize and build your sites, and invite people to build with you. You may have different needs for different Workspaces, so you can create as many as you need, but each Webflow customer is limited to one free Workspace.</div></details>
+      <details><summary>How many paid Site plans can I have in my Workspace?</summary><div>Any Workspace tier can support an unlimited number of paid Site plans. The main difference in site limits on Workspace tiers is the number of Starter sites each tier supports (Free = 2; Core = 10; Growth = Unlimited). As soon as you upgrade a Starter site to a paid Site plan, it no longer counts against your free Starter site limit.</div></details>
+      <details><summary>Can I cancel my Site and/or Workspace at any time?</summary><div>Yes, but you’ll still use the remainder of the term for the plan you signed up for.</div></details>
+      <details><summary>What is a Platform plan?</summary><div>A Platform plan bundles a site, Workspace, add-ons, and more to help growing teams and enterprise organizations get started faster with Webflow.</div></details>
+      <details><summary>What Premium plan add-ons are available?</summary><div>
+        <table>
+          <tr><th>Bandwidth</th><th>Price</th></tr>
+          <tr><td>+50 GB</td><td>+$20 /month, billed annually<br>+$30 /month, billed monthly</td></tr>
+          <tr><td>+100 GB</td><td>+$40 /month, billed annually<br>+$60 /month, billed monthly</td></tr>
+          <tr><td>+150 GB</td><td>+$60 /month, billed annually<br>+$90 /month, billed monthly</td></tr>
+          <tr><td>+250 GB</td><td>+$100 /month, billed annually<br>+$150 /month, billed monthly</td></tr>
+          <tr><td>+350 GB</td><td>+$140 /month, billed annually<br>+$210 /month, billed monthly</td></tr>
+          <tr><td>+450 GB</td><td>+$174 /month, billed annually<br>+$260 /month, billed monthly</td></tr>
+          <tr><td>+700 GB</td><td>+$274 /month, billed annually<br>+$410 /month, billed monthly</td></tr>
+          <tr><td>+950 GB</td><td>+$374 /month, billed annually<br>+$560 /month, billed monthly</td></tr>
+        </table></div></details>
+    </div>
+  </div>
+
+  <div class="faq-group" style="margin-top:80px">
+    <h3>Capabilities and support</h3>
+    <div>
+      <details><summary>What kind of support does Webflow offer?</summary><div>We provide customer support via email and aim to reply to all requests within 48 hours. You can also find guides and solutions in the Webflow Help Center, courses and tutorials on Webflow University, and a host of helpful Webflow customers in the Webflow Community.</div></details>
+      <details><summary>Can I host my website somewhere else?</summary><div><p>You can export your site and host it anywhere you like with any of our paid Workspace plans, no attribution required.</p><p>Note: Dynamic content must be exported on a collection-by-collection basis and forms will stop working.
+
+</p></div></details>
+      <details><summary>Can my clients or coworkers upload their own content?</summary><div>For Starter, Freelancer, and Agency Workspace plans, clients can use client seats to publish new content anytime.</div></details>
+      <details><summary>How much traffic can Webflow hosting handle?</summary><div>Webflow hosting scales automatically to handle millions of simultaneous visits and uses Cloudflare's CDN to load websites in milliseconds.
+
+</div></details>
+      <details><summary>How does Webflow Cloud pricing work?</summary><div>
+        <p>Webflow Cloud provides built-in storage for web apps. Apps can be created and deployed without a Webflow site using the app project type, or added to an existing Webflow site to extend its functionality.</p>
+        <p>Usage follows Webflow’s existing site plan structure, with limits for bandwidth, requests, CPU usage, and storage. Paid plans include surge protection to handle temporary traffic spikes, and additional capacity can be added as usage grows.</p></div></details>
+      <details><summary>Can I import my website or my code?</summary><div>No, you can only develop websites in Webflow. If you export your code, it can’t be reimported.</div></details>
+      <details><summary>Are Webflow websites SEO-friendly?</summary><div>Yes, Webflow sites are SEO-friendly. Our blazing-fast hosting, standards-based code, free SSL, and mobile-friendliness all help Webflow sites rank in search.</div></details>
+      <details><summary>Does Webflow have an API?</summary><div>Webflow’s REST API allows you to add, update, and remove items from your CMS. Read the <a href="#" style="text-decoration:underline">documentation</a>.</div></details>
+      <details><summary>How much does a Webflow Certification exam cost?</summary><div>The Webflow Practitioner Certification exam is $100 USD. In some countries and regions, additional taxes (such as VAT) may apply.</div></details>
+    </div>
+  </div>
+
+  <!-- Need help? -->
+  <div class="help">
+    <h3>Need help?</h3>
+    <div class="help-cards">
+      <a class="hcard hcard--green" href="#"><h4>Site vs. Workspace plans</h4><p>Check out this article explaining the different types of Webflow plans.</p><span class="go">↗</span></a>
+      <a class="hcard hcard--purple" href="#"><h4>Looking for support?</h4><p>Visit our support portal for product or account help.</p><span class="go">↗</span></a>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- =============== GET STARTED =============== -->
+<section>
+<div class="wrap start">
+  <h2>Get started<br>for free</h2>
+  <div>
+    <p>Try Webflow for as long as you like with our free Starter plan. Purchase a paid Site plan to publish, host, and unlock additional features.</p>
+    <div class="row">
+      <a class="btn btn--inline" href="#">Get started — it’s free</a>
+      <a class="btn btn--inline btn--grey" href="#">Watch demo</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<a class="badge-b" href="#">
+        <i>
+            <img src="./webflow images/log -n-small.png" alt="" class="i-img">
+        </i>Made in Webflow
+    </a>
+
+</main>
+<!-- footer -->
+<script>
+window.WF_FOOTER_CONFIG = {
+  copyright: "© 2026 Webflow, Inc. All rights reserved",
+
+  columns: [
+    [ { title: "Source by Webflow", links: ["Research preview"] },
+      { title: "Product", links: ["Platform","Design","Edit content","Interactions","GSAP","Page building","Shared Libraries","Collaboration","CMS","Hosting","Localize","Security","Ecommerce","Analyze","Optimize","SEO",["MCP","#","new"],["AEO","#","new"],"Webflow Cloud",["DevLink","#","Labs"],["Figma to Webflow","#","Labs"],"Accessibility","AI"] } ],
+    [ { title: "Solutions", links: ["Enterprise","Global alliances","Agencies","Freelancers"] },
+      { title: "Resources", links: ["University","Blog","Customer stories","Webinars & ebooks","Apps","Libraries","Templates","Developers","Made in Webflow","Glossary","Livestreams","The Webflow Way","Business Value Calculator"] } ],
+    [ { title: "Company", links: ["About",["Careers","#","We’re hiring!"],"Press","Webflow Ventures","Webflow Shop","Terms of Service","Privacy policy","Cookie policy","Accessibility statement"] },
+      { title: "Compare", links: ["Contentful","Framer","Sitecore","Wix","WordPress"] } ],
+    [ { title: "Community", links: ["Discover the community","Partner with Webflow","Certified Partners","Become a template designer","Become an affiliate","Become a Global Leader","Find a meetup near you"] },
+      { title: "Get help", links: ["Support","Pricing","Status","Community Homebase","Wishlist"] } ]
+  ],
+
+  social: [   // [symbol/text, url, accessible name]
+    ["W","#","Webflow"], ["▶","#","YouTube"], ["X","#","X"], ["f","#","Facebook"], ["in","#","LinkedIn"], ["◎","#","Instagram"], ["♪","#","TikTok"]
+  ],
+
+  // Big W on the right. Each slide = caption + fallback background + optional image/video URL.
+  // Leave media "" to show the gradient. .mp4/.webm play as silent looping video.
+  bigW: {
+    interval: 3000,   // ms between slides while hovering
+    slides: [
+      { caption: "Duracell Coppertop Optimum", bg: "linear-gradient(120deg,#8a8a8e,#b8641e 55%,#4a2208)", media: "https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/68b89b6bc974abdca78db913_interactions_miw-slider_cloneable-asset_08.webp" },
+      { caption: "Together",   bg: "linear-gradient(160deg,#3a1fd0,#1a0a60 70%)", media: "https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/68b9a05cd703a66b0e92c61d_design_miw_sites_02.avif" },
+      { caption: "Bli…",       bg: "linear-gradient(160deg,#d83a3a,#a01a1a)",     media: "https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/68b8544804f09c2ea80de421_d9be4457075c7b43f46648f9470ebe50_interactions-hero-09.avif" },
+      { caption: "",           bg: "repeating-linear-gradient(90deg,#fff 0 24px,#7fe0d8 24px 48px)", media: "https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/68b9a05cc4e511863b3de078_design_miw_sites_04.avif" },
+      { caption: "take time",  bg: "linear-gradient(160deg,#f2542a,#f09a1a)",     media: "https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/68b8544827ddb0ac640381e8_2f37143fccefde0915d24c72a5a15da7_interactions-hero-05.avif" }
+    ]
+  }
+};
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var C = window.WF_FOOTER_CONFIG, root = document.getElementById('wf-footer');
+  var lk = function (x) {
+    if (typeof x === 'string') x = [x, '#'];
+    return '<li><a href="' + (x[1] || '#') + '">' + x[0] + '</a>' + (x[2] ? '<em>' + String(x[2]).toUpperCase() + '</em>' : '') + '</li>';
+  };
+
+  root.innerHTML =
+    '<div class="wrap"><div class="cols">' +
+    C.columns.map(function (col) {
+      return '<div>' + col.map(function (g) { return '<div class="gp"><h4>' + g.title + '</h4><ul>' + g.links.map(lk).join('') + '</ul></div>'; }).join('') + '</div>';
+    }).join('') +
+    '</div><div class="low"><span>' + C.copyright + '</span><div class="soc">' +
+    C.social.map(function (s) { return '<a href="' + s[1] + '" aria-label="' + (s[2] || s[0]) + '">' + s[0] + '</a>'; }).join('') +
+    '</div></div></div><div class="ft-w" id="wf-ftW" aria-label="Webflow"></div>';
+
+  // big W slides
+  var fw = document.getElementById('wf-ftW'), S = C.bigW.slides, wi = -1, wt;
+  fw.innerHTML = S.map(function (s) { return '<div class="wsl" style="background:' + s.bg + '">' + s.caption + '<div class="pr">01<i></i>02</div></div>'; }).join('');
+
+  // apply image / video links
+  [].forEach.call(fw.children, function (host, i) {
+    var u = S[i].media; if (!u) return;
+    var isVid = /\.(mp4|webm|mov)(\?|$)/i.test(u), e = document.createElement(isVid ? 'video' : 'img');
+    e.src = u; e.className = 'mi';
+    if (isVid) { e.muted = true; e.loop = true; e.autoplay = true; e.playsInline = true; e.setAttribute('playsinline', ''); e.play && e.play().catch(function () {}); }
+    else e.alt = '';
+    host.insertBefore(e, host.firstChild); host.classList.add('hide-ph');
+  });
+
+  function show() { wi = (wi + 1) % S.length; [].forEach.call(fw.children, function (c, i) { c.classList.toggle('cur', i === wi); }); }
+  fw.addEventListener('mouseenter', function () { fw.classList.add('on'); show(); wt = setInterval(show, C.bigW.interval || 3000); });
+  fw.addEventListener('mouseleave', function () { fw.classList.remove('on'); clearInterval(wt); });
+});
+</script>
+
+<footer class="wf-ft" id="wf-footer"></footer>   <!-- PLACE THIS WHERE THE FOOTER SHOULD APPEAR -->
+
+
+</body>
+</html>

@@ -1,0 +1,395 @@
+.wf-nav{--bg:#080808;--blue:#146ef5;display:contents;color:#fff;font-family:"Inter Tight","Helvetica Neue",Arial,sans-serif;font-size:16px;-webkit-font-smoothing:antialiased}
+.wf-nav *{box-sizing:border-box;margin:0}
+.wf-nav a{color:inherit;text-decoration:none}
+.wf-nav ul{padding:0}
+.wf-nav .wrap{width:min(1440px,100% - 48px);margin:0 auto}
+
+/* banner */
+.wf-nav .banner{background:var(--blue);height:45px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;text-align:center;padding:0 16px}
+.wf-nav .banner a:hover{text-decoration:underline}
+
+/* nav (sticky) */
+.wf-nav nav{position:sticky;top:0;z-index:20;height:66px;background:var(--bg);border-bottom:1px solid #1f1f1f}
+.wf-nav nav .wrap{height:100%;display:flex;align-items:center;justify-content:space-between;font-weight:500}
+.wf-nav .l,.wf-nav .r{display:flex;align-items:center}
+.wf-nav .l{gap:25px}.wf-nav .r{gap:29px}
+.wf-nav .logo{display:flex;align-items:center;gap:8px;font-size:21px;font-weight:600;margin-right:6px;letter-spacing:-.01em}
+.wf-nav .logo img{height:24px;width:auto;display:block}
+.wf-nav .btn{display:inline-flex;align-items:center;justify-content:center;background:var(--blue);color:#fff;border:0;border-radius:4px;font:500 16px "Inter Tight",Arial,sans-serif;height:51px;padding:0 24px;cursor:pointer;transition:filter .2s}
+.wf-nav .btn:hover{filter:brightness(1.15)}
+.wf-nav .nav-links a{transition:color .2s}
+.wf-nav .nav-links a.act{color:var(--blue)}
+
+/* mega menus */
+.wf-nav .mg{position:absolute;left:0;right:0;top:100%;background:#0b0b0b;border-bottom:1px solid #222;display:none;padding-top:56px}
+.wf-nav .mg.open{display:block}
+.wf-nav .mg .wrap{display:grid;grid-template-columns:repeat(4,354px);gap:0;height:auto}
+.wf-nav .mg h5{font-size:14px;line-height:20px;font-weight:500;color:#8a8a8a;margin-bottom:18px}
+.wf-nav .mg li{list-style:none;margin-bottom:19px}
+.wf-nav .mg li a{font-size:20px;line-height:28px;font-weight:500;color:#fff;transition:color .15s}
+.wf-nav .mg li a:hover{color:var(--blue)}
+.wf-nav .mg .cards{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:20px}
+.wf-nav .mg .side{display:grid;gap:16px;align-content:start}
+.wf-nav .mg .mc{border-radius:8px;padding:22px 24px;min-height:110px;font-size:14px;line-height:20px;color:#ddd}
+.wf-nav .mg .mc b{display:block;font-size:24px;line-height:30px;font-weight:600;color:#fff;margin-bottom:6px}
+.wf-nav .mg .bar{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #222;margin:40px 0 0;padding:16px 0;font-size:14px}
+.wf-nav .mg .bar span{display:flex;align-items:center;gap:14px}
+.wf-nav .mg .sel{background:#161616;border:1px solid #2c2c2c;border-radius:4px;padding:6px 12px;color:#fff;font:500 14px "Inter Tight",Arial,sans-serif;cursor:pointer}
+.wf-nav .mg .ib{width:30px;height:30px;border-radius:50%;background:#1b1b1b;border:1px solid #2c2c2c;display:grid;place-items:center;font-size:13px;color:#ccc;cursor:pointer;font-style:normal}
+.wf-nav .mg .ib.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.wf-nav .scrim{position:fixed;inset:66px 0 0;background:#000c;z-index:10;opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s}
+.wf-nav .scrim.on{opacity:1;visibility:visible}
+
+/* responsive: below 1040px the links, secondary buttons and mega menus are hidden (as in the original) */
+@media(max-width:1040px){.wf-nav .nav-links,.wf-nav .hide-s{display:none}.wf-nav .mg{display:none!important}}
+
+
+:root{
+  --bg:#000; --card:#1a1a1a; --line:#222; --txt:#fff; --muted:#9b9b9b;
+  --blue:#146ef5; --link:#3b82f6;
+  /* --orange:linear-gradient(135deg,#ffd45c 0%,#ffa36b 45%,#ee5a3c 100%); */
+  --wrap:1440px;   /* wide container (testimonials, FAQ)  */
+  --mid:1070px;    /* image cards                          */
+  --col:640px;     /* text column                          */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font:16px/1.5 "Inter","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+img{display:block;max-width:100%}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 100px}
+.center{text-align:center}
+.btn{display:inline-block;background:var(--blue);color:#fff;font-weight:500;font-size:16px;padding:10px 20px;border-radius:4px}
+.link{text-decoration:underline;text-underline-offset:3px}
+h1{font-size:72px;line-height:1.1;font-weight:600;letter-spacing:-1px}
+h2{font-size:72px;line-height:1.05;font-weight:600;letter-spacing:-1px}
+h4{
+  font-size: 16px;
+}
+p{
+  font-size: 16px;
+  font-weight: 400;
+  color: #ababab;
+}
+
+/* ========== IMAGE SLOTS: every <img class="slot"> is a place for YOUR image ========== */
+img.slot{object-fit:cover}
+img.slot[src=""],img.slot:not([src]){background:#161616;outline:1px dashed #666;outline-offset:-1px;min-height:40px;font-size:11px;color:#777}
+/* a card with an orange bg image: the gradient shows until you add your bg image */
+.orange{position:relative;border-radius:6px;overflow:hidden;background:var(--orange)}
+.orange>.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+/* ========== 2. HERO ========== */
+.hero{padding:96px 0 0;text-align:center}
+.eyebrow{font-size:14px;color:var(--muted);margin-bottom:16px}
+.hero h1{max-width:760px;margin:0 auto 28px}
+.hero p{max-width:520px;margin:0 auto 28px;color:#c9c9c9;font-size:16px}
+.hero .ctas{display:flex;gap:28px;justify-content:center;align-items:center}
+/* ORANGE LONG BAR + sticky screenshot (image rests on bar and rises slower than the bar on scroll) */
+.bar-stage{
+  position:relative;
+  height:1500px;
+  margin-top:70px}
+.bar-stage .bar{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:340px;background:var(--orange)}
+.bar-stage .bar img{width:100%;height:100%}                 /* IMG 01: full-width orange bar bg */
+.bar-stage .shot{
+  position:sticky;
+  top:90px;
+  width:944px;
+  max-width:92%;margin:0 auto;border-radius:8px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.bar-stage .shot img{width:100%;aspect-ratio:944/700}       /* IMG 02: app screenshot */
+
+/* ========== 3. INTRO + TABS ========== */
+.intro{padding:120px 0 60px}
+.intro .tag{font-size:17px;color:var(--muted);margin-bottom:14px}
+.intro h3{font-size:36px;line-height:1.25;font-weight:400;max-width:950px}
+.tabs{max-width:950px;margin:60px auto 0}
+.tabs input{position:absolute;opacity:0;pointer-events:none}
+.tabs .nav{display:flex;background:#363636;border:1px solid var(--line);border-radius:8px;padding:4px}
+.tabs .nav label{flex:1;text-align:center;font-size:17px;padding:10px 0;border-radius:5px;cursor:pointer;color:#ddd}
+.panel{display:none;padding-top:40px}
+.panel .row{display:flex;gap:30px;align-items:center;margin-bottom:30px}
+.panel .row img{width:300px;height:190px;border-radius:4px;flex:none}   /* tab thumbs: 300x190 */
+.panel h4{font-size:18px;font-weight:600;margin-bottom:10px}
+.panel p{font-size:14px;color:var(--muted);max-width:330px}
+#t1:checked~.nav label[for=t1],#t2:checked~.nav label[for=t2],#t3:checked~.nav label[for=t3],
+#t4:checked~.nav label[for=t4],#t5:checked~.nav label[for=t5]{background:#000;color:#fff}
+#t1:checked~.p1,#t2:checked~.p2,#t3:checked~.p3,#t4:checked~.p4,#t5:checked~.p5{display:block}
+
+/* ========== 4. KEEP ME UPDATED (form) ========== */
+.form-sec{padding:140px 0}
+.form-sec .wrap{display:flex;justify-content:space-between;gap:60px}
+.form-sec .left{width:320px;padding-top:40px}
+.form-sec .icon{width:60px;height:60px;border-radius:14px;margin-bottom:20px}   /* IMG 12 */
+.form-sec h2{font-size:52px;margin-bottom:24px}
+.form-sec .left p{font-size:17px;color:#bbb;margin-bottom:16px}
+.form{width:703px;border:1px solid var(--line);border-radius:6px;padding:26px 24px;display:grid;grid-template-columns:1fr 1fr;gap:22px 26px}
+.form label{font-size:15px;font-weight:600;display:block;margin-bottom:8px}
+.form input,.form select{width:100%;height:48px;background:#161616;border:1px solid var(--line);border-radius:4px;color:#fff;padding:0 14px;font-size:14px}
+.form .full{grid-column:1/-1}
+.form .chk{display:flex;gap:10px;align-items:center;font-size:12px;color:#ccc}
+.form .chk input{width:19px;height:16px}
+.form small{font-size:15px;color:#ccc}
+
+/* ========== 5. BUILD / AGENTS / WORKSPACE / STACK ========== */
+.feat{position:relative;padding:120px 0 40px}
+.sidenav{position:sticky;top:300px;float:left;margin-left:100px;width:140px;font-size:14px;line-height:2;height:0}
+.sidenav a{display:block;color:#fff}
+.sidenav a:hover{color:var(--link)}
+.block{max-width:var(--mid);margin:0 auto 140px;text-align:center}
+.block h2{margin-bottom:60px}
+/* dark app window bleeding in an orange card (absolute over bg) */
+.card-build{height:640px}
+.card-build .app{position:absolute;border-radius:6px;right: 10%; bottom: 10%;}      /* IMG 05 */
+.copy{max-width:var(--col);margin:50px auto 0;text-align:left}
+.copy .lead{font-size:20px;line-height:1.5;margin-bottom:30px}
+.copy li{display:flex;gap:16px;padding:22px 0;border-top:1px solid #333}
+.copy li:last-child{border-bottom:1px solid #333}
+.copy li img{width:20px;height:20px;flex:none;margin-top:3px}   /* small svg icons */
+.copy h5{font-size:20px;font-weight:600;margin-bottom:6px}
+.copy p{font-size:17px;color:var(--muted)}
+
+/* ---- WORKSPACE: white image resting ABSOLUTE over orange bg + vertical tabs ---- */
+.ws{display:flex;gap:8px;height:640px;max-width:var(--mid);margin:0 auto}
+.ws input{position:absolute;opacity:0}
+.ws label{position:relative;flex:0 0 76px;border-radius:6px;overflow:hidden;cursor:pointer;background:var(--orange);transition:flex .5s}
+.ws label>.bg{position:absolute;inset:0;width:100%;height:100%}
+.ws label>span{position:absolute;bottom:14px;left:50%;writing-mode:vertical-rl;transform:translateX(-50%) rotate(180deg);font-size:13px;color:#111}
+.ws label>.fg{position:absolute;opacity:0;left:-40px;top:40px;right: 40px; bottom: 40px; width:660px;height:720px;border-radius:4px;box-shadow:0 20px 50px rgba(0,0,0,.25)} /* white image */
+.ws input:checked+label{flex:1}
+.ws input:checked+label>.fg{opacity:1}
+.ws input:checked+label>span{opacity:0}
+
+/* ---- STACK: heading left, red-orange card right ---- */
+.stack{display:flex;max-width:1100px;margin:0 auto 140px;gap:60px;align-items:flex-end}
+.stack .txt{flex:1;text-align:left}
+.stack h2{margin-bottom:200px}
+.stack .txt h5{font-size:22px;margin-bottom:10px}
+.stack .txt p{font-size:17px;color:var(--muted);max-width:300px}
+.stack .orange{width:600px;height:700px;flex:none;background:linear-gradient(160deg,#ff6a4a,#ffb144)}
+.stack .orange .fg{position:absolute;left:35px;right:35px;top:35px;bottom:35px;width:500px;height:600px;border-radius:6px}  /* IMG 21 */
+
+/* ========== 6. TESTIMONIALS (scroll-snap, no JS) ========== */
+.testi{padding:80px 0}
+.arrows{display:flex;gap:8px;justify-content:flex-end;margin-bottom:16px}
+.arrows a{width:22px;height:22px;border-radius:50%;background:#fff;color:#000;font-size:12px;text-align:center;line-height:22px}
+.track{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.track::-webkit-scrollbar{display:none}
+.q{flex:0 0 100%;scroll-snap-align:start;border:1px solid var(--line);border-radius:6px;padding:26px;display:flex;gap:90px;min-height:300px}
+.q .who{display:flex;gap:12px;align-items:flex-start;width:200px;flex:none}
+.q .who img{width:36px;height:36px;border-radius:50%}   /* avatar 36x36 */
+.q .who b{display:block;font-size:16px;font-weight:600}
+.q .who span{font-size:12px;color:#bbb}
+.q blockquote{font-size:24px;line-height:1.5;font-weight:400}
+
+/* ========== 7. FAQ + RESOURCES ========== */
+.faq-sec{padding:60px 0 120px}
+.faq-sec .wrap{display:flex;justify-content:space-between}
+.faq{width:560px}
+.faq .lbl,.res .lbl{font-size:29px;color:#bbb;margin-bottom:22px}
+.faq details{border-bottom:1px solid #333;padding:16px 0}
+.faq summary{display:flex;justify-content:space-between;gap:30px;font-size:20px;cursor:pointer;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--link);font-size:18px;line-height:1}
+.faq details[open] summary{color:var(--link)}
+.faq details[open] summary::after{content:"\2013"}
+.faq details p{font-size:16px;color:#ddd;padding-top:14px;max-width:480px}
+.res{width:290px;align-self:center}
+.res .it{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+.res .it img{width:84px;height:84px;border-radius:2px;flex:none}   /* thumbs 84x84 */
+.res b{font-size:17px;display:block;margin-bottom:4px}
+.res a{font-size:15px}
+
+/* ========== 8. GET TO THE SOURCE (CTA) ========== */
+.cta{
+  background:"https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8e97f9b69a6694cd66b1dd_home-source-bg.webp";
+   position:relative;overflow:hidden;padding:60px 0 0;min-height:560px}
+.cta h2{font-size:60px;margin-bottom:24px}
+.cta p{font-size:16px;max-width:330px;margin-bottom:24px;color:#ddd}
+.cta .ghost{position:absolute;left:70px;bottom:-90px;width:640px;opacity:.12}          /* IMG 31: big grey "Source" logo */
+.cta .shot{position:absolute;right:60px;top:40px;width:640px;height:520px;border-radius:6px 6px 0 0}  /* IMG 32 */
+.cta .wrap{position:relative;z-index:2}
+
+@media(max-width:900px){
+  .wrap{padding:0 20px} h1,h2{font-size:42px}
+  .sidenav{display:none}.ws{height:420px}.stack,.form-sec .wrap,.faq-sec .wrap{flex-direction:column}
+  .form,.faq,.res{width:100%}.q{flex-direction:column;gap:20px}.panel .row{flex-direction:column;align-items:flex-start}
+  .cta .shot{position:static;width:100%}.bar-stage{height:900px}
+}
+
+/* update css */
+
+.update-form{
+  display:grid; 
+  grid-template-columns:1fr 1fr;
+  gap:18px 20px;
+  width: 785px;
+  height: 900px;
+  border: 0.5px solid gray;
+  padding: 50px;
+  border-radius: 15px;
+}
+.field label{
+  display:block; 
+  font-size:14.4px; 
+  font-weight: 550;
+  margin-bottom:8px; 
+  color:#d4d4d8;
+}
+.field input, .field select{
+  width:100%; 
+  background:#131316;
+  border:1px solid #2a2a2e; 
+  border-radius:8px;
+  padding:13px 14px; 
+  color:#fff; 
+  font-size:14px;
+  outline:none; 
+  box-sizing:border-box;
+}
+.field input::placeholder{ color:#52525b; }
+
+.check-row{
+  grid-column:1 / -1;
+  display:flex; 
+  gap:10px; 
+  align-items:center;
+  font-size:14px; 
+  color:#d4d4d8;
+}
+.check-row input{ 
+  width:16px; 
+  height:16px; 
+  accent-color:#4a5df9;
+  /* background-color: transparent;  */
+}
+
+.submitt-btn{
+  /* grid-column:1 / -1; */
+  background:#1f75f5; 
+  color:#fff; 
+  border:0;
+  padding:7px; 
+  border-radius:8px;
+  font-size:15px; 
+  font-weight:600; 
+  cursor:pointer;
+}
+.fine{ 
+  grid-column:1 / -1; 
+  font-size:12px; 
+  color:#71717a; 
+  margin:0; 
+}
+
+@media(max-width:900px){
+  .update-grid{ grid-template-columns:1fr; gap:40px; }
+  .update-form{ grid-template-columns:1fr; }
+}
+
+/* the footer */
+
+
+.wf-ft{--bg:#080808;--blue:#146ef5;
+  position:relative;overflow:hidden;padding:130px 0 70px;background:var(--bg);color:#fff;
+  font-family:"Inter Tight","Helvetica Neue",Arial,sans-serif;font-size:16px;-webkit-font-smoothing:antialiased}
+.wf-ft *{box-sizing:border-box;margin:0}
+.wf-ft a{color:inherit;text-decoration:none}
+.wf-ft ul{padding:0}
+.wf-ft .wrap{width:min(1440px,100% - 48px);margin:0 auto}
+
+/* link columns */
+.wf-ft .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.wf-ft h4{font-size:16px;line-height:24px;font-weight:600;margin-bottom:16px}
+.wf-ft .gp+.gp{margin-top:44px}
+.wf-ft li{list-style:none;margin-bottom:14px;font-size:16px;line-height:24px;font-weight:500;color:#b9b9b9}
+.wf-ft li a{transition:color .15s}
+.wf-ft li a:hover{color:#fff}
+.wf-ft li em{font-style:normal;font-size:10px;color:var(--blue);margin-left:6px;font-weight:600}
+
+/* bottom row */
+.wf-ft .low{display:flex;flex-direction:column;gap:22px;margin-top:80px;font-size:14px;color:#b9b9b9;position:relative;z-index:2}
+.wf-ft .soc{display:flex;gap:18px}
+.wf-ft .soc a{width:18px;height:18px;display:grid;place-items:center;font-size:12px;font-weight:700;color:#cfcfcf}
+/* big W: hover reveals media clipped to the logo shape.
+   ---------------------------------------------------------------
+   WHERE THE LOGO GOES  ->  the --wlogo line below.
+   Default = the W drawn as an inline SVG (always works, no loading).
+   To use your own file instead, download it, save it next to this page
+   (e.g. webflow-icon.png) and replace the whole value with:
+        --wlogo:url("webflow-icon.png");
+   NOTE: it must be on YOUR OWN site/folder. Remote links (like uxwing.com)
+   are blocked by the browser for masks (CORS), so the hover would break.
+   The image needs a transparent background; only its shape is used.
+   --------------------------------------------------------------- */
+.wf-ft .ft-w{
+  --wlogo:url("https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/webflow-icon.png");
+  position:absolute;right:max(24px,calc((100vw - 1440px)/2));bottom:0;
+  width:645px;height:410px;cursor:pointer;
+  background:var(--wlogo) center/contain no-repeat;                      /* the W's colour when not hovered */
+  -webkit-mask:var(--wlogo) center/contain no-repeat;
+          mask:var(--wlogo) center/contain no-repeat;
+}
+.wf-ft .wsl{position:absolute;inset:0;opacity:0;transition:opacity .45s;display:flex;align-items:flex-end;padding:0 0 40px 150px;color:#fff;font-size:40px;line-height:44px;font-weight:700}
+.wf-ft .ft-w.on .wsl.cur{opacity:1}
+.wf-ft .wsl .pr{position:absolute;left:150px;right:330px;bottom:22px;display:flex;gap:12px;align-items:center;font-size:14px;font-weight:600}
+.wf-ft .wsl .pr i{flex:1;height:2px;background:#ffffff55;position:relative}
+.wf-ft .wsl .pr i::after{content:"";position:absolute;left:0;top:0;bottom:0;width:0;background:#fff}
+.wf-ft .ft-w.on .wsl.cur .pr i::after{animation:wf-wp 3s linear forwards}
+@keyframes wf-wp{to{width:100%}}
+
+/* image / video slots */
+.wf-ft .mi{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.wf-ft .hide-ph{color:transparent!important;font-size:0!important}
+.wf-ft .hide-ph>:not(.mi){visibility:hidden}
+.wf-ft .hide-ph::before,.wf-ft .hide-ph::after{display:none!important}
+.wf-ft .wsl.hide-ph .pr{visibility:visible;color:#fff;font-size:14px}
+
+@media(max-width:1040px){
+  .wf-ft .cols{grid-template-columns:1fr 1fr}
+  .wf-ft .ft-w{width:320px;height:204px;position:relative;right:auto;margin:48px 0 0 24px}
+  .wf-ft{padding-bottom:0}
+}
+
+.badge{
+  position:fixed;
+  right:max(16px,env(safe-area-inset-right));
+  bottom:max(16px,env(safe-area-inset-bottom));
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  font-size:12px;
+  font-weight:600;
+  background:#0b0b0b;
+  border:1px solid #2a2a2a;
+  border-radius:999px;
+  color:#fff;
+  text-decoration:none
+}
+.badge i{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:#146ef5;
+  display:block
+}
+.i-img{
+  width:15px;
+  height:15px;
+  border-radius:50%;
+  /* background:#146ef5; */
+  display:block
+}
+
+
+   /* for the tabs row not to follow other rows instruction from bootstrap */
+.panel .row{display:flex;flex-wrap:nowrap;align-items:center;gap:30px;margin:0 0 30px}
+.panel .row>*{width:auto;max-width:none;padding:0;margin:0;flex-shrink:0}
+.panel .row>div{flex:1}

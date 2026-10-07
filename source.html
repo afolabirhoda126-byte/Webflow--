@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- This line makes the page fit phones properly -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Source by Webflow|agentic marketing platform</title>
+<link rel="shortcut icon" href="./webflow images/log -n-small.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Bootstrap first, then our own style.css, so my styles win -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="source.css">
+<style>body{margin:0;background:#080808;color:#fff;font-family:"Inter Tight",Arial,sans-serif}</style>
+</head>
+<body>
+  <div class="wf-nav" id="wf-nav"></div>  <!-- PLACE THIS WHERE THE NAV SHOULD APPEAR -->
+
+<script> 
+window.WF_NAV_CONFIG = {
+  banner: {
+    show: true,
+    text: "Introducing source bt Webflow",
+    linkText: "Read the announcement →",
+    href: "#"
+  },
+
+  logo: { text: "Webflow", href: "/", img: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/webflow-icon.png" },   // img: put a logo image URL here (optional)
+
+  links: [   // left side of the nav
+    { label: "Platform",   menu: "platform" },
+    { label: "Source",     href: "./index.html" },
+    { label: "Solutions",  menu: "solutions" },
+    { label: "Resources",  menu: "resources" },
+    { label: "Enterprise", href: "./enterprisee.html" },
+    { label: "Pricing",    href: "./pricing.html" }
+  ],
+
+  right: [   // right side. hideSmall hides it on tablet/mobile; button makes it the blue button
+    { label: "Log in",        href: "./login.html", hideSmall: true },
+    { label: "Contact Sales", href: "#", hideSmall: true },
+    { label: "Start for free", href: "#", button: true }
+  ],
+
+  // The strip at the bottom of each mega menu ("I'm a Marketer" + appearance toggle)
+  bar: { show: true, roleLabel: "I’m a", role: "Marketer ⌄", appearanceLabel: "Appearance", icons: ["☼", "☾", "▭"], activeIcon: 2 },
+
+  menus: {
+    platform: {
+      columns: [
+        { title: "Build",   items: ["Design", "Edit content", "Interactions", "Collaboration", "Page building"] },
+        { title: "Manage",  items: ["CMS", "Hosting", "Localize", "Security", "Shared Libraries"] },
+        { title: "Convert", items: ["Analyze", "Optimize", "SEO", "AEO"] },
+        { title: "Extend",  items: ["Apps", "Figma to Webflow", "Webflow Cloud", "DevLink", "MCP"] }
+      ],
+      cards: { layout: "row", items: [        // "row" = two wide cards under the columns
+        { title: "Platform Overview", text: "Explore the power of the Webflow platform", bg: "linear-gradient(100deg,#146ef5,#0a3fb0)", href: "#" },
+        { title: "Webflow AI", text: "Elevate web experiences with the power of AI", bg: "linear-gradient(100deg,#111,#10224a)", href: "#" }
+      ]}
+    },
+    solutions: {
+      columns: [
+        { title: "Marketing",         items: ["Brand", "Performance", "Digital Experience", "Ops"] },
+        { title: "Engineering",       items: ["Engineering leaders", "Developers"] },
+        { title: "Service Providers", items: ["Agencies", "Freelancers", "Global Alliances"] }
+      ],
+      cards: { layout: "side", items: [       // "side" = stacked cards in the 4th column
+        { title: "Enterprise", text: "Advanced collaboration workflows and enterprise-grade scalability.", bg: "linear-gradient(135deg,#dfe8ff,#fff)", color: "#333", titleColor: "#111", href: "#" },
+        { title: "AEO", text: "Show up in AI-driven search with the power of Webflow.", bg: "linear-gradient(135deg,#150a3a,#6a2fd0)", href: "#" }
+      ]}
+    },
+    resources: {
+      columns: [
+        { title: "Get started", items: ["Templates", "Made in Webflow", "Hire a Certified Partner", "Developers"] },
+        { title: "Learn",       items: ["Webflow University", "Blog", "Webinars & ebooks", "The Webflow Way"] },
+        { title: "Discover",    items: ["Customer stories", "Our Community", "Partner with Webflow", "AEO Assessment"] },
+        { title: "Get help",    items: ["Support", "Join the Community"] }
+      ]
+    }
+  }
+};
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var C = window.WF_NAV_CONFIG, root = document.getElementById('wf-nav');
+  var it = function (x) { return typeof x === 'string' ? { label: x, href: '#' } : Array.isArray(x) ? { label: x[0], href: x[1] || '#' } : x; };
+
+  // banner + nav bar
+  var h = '';
+  if (C.banner && C.banner.show) h += '<div class="banner">' + C.banner.text + ' <a href="' + C.banner.href + '">&nbsp;' + C.banner.linkText + '</a></div>';
+  var logo = C.logo;
+  h += '<nav><div class="wrap"><div class="l"><a class="logo" href="' + logo.href + '">' + (logo.img ? '<img src="' + logo.img + '" alt="">' : '') + logo.text + '</a>' +
+    '<span class="nav-links l">' + C.links.map(function (l) { return '<a href="' + (l.href || '#') + '"' + (l.menu ? ' data-m="' + l.menu + '"' : '') + '>' + l.label + '</a>'; }).join('') + '</span></div>' +
+    '<div class="r">' + C.right.map(function (r) { return '<a class="' + (r.button ? 'btn ' : '') + (r.hideSmall ? 'hide-s' : '') + '" href="' + r.href + '">' + r.label + '</a>'; }).join('') + '</div></div>' +
+    '<div class="mg" id="wf-mg"></div></nav><div class="scrim" id="wf-scrim"></div>';
+  root.innerHTML = h;
+
+  // mega menu builder
+  var bar = function () {
+    var b = C.bar; if (!b || !b.show) return '';
+    return '<div class="bar"><span>' + b.roleLabel + ' <button class="sel">' + b.role + '</button></span><span>' + b.appearanceLabel + ' ' +
+      b.icons.map(function (ic, i) { return '<i class="ib' + (i === b.activeIcon ? ' on' : '') + '">' + ic + '</i>'; }).join('') + '</span></div>';
+  };
+  var card = function (c) { return '<a class="mc" href="' + (c.href || '#') + '" style="background:' + c.bg + (c.color ? ';color:' + c.color : '') + '"><b' + (c.titleColor ? ' style="color:' + c.titleColor + '"' : '') + '>' + c.title + '</b>' + c.text + '</a>'; };
+  var build = function (m) {
+    var s = m.columns.map(function (col) {
+      return '<div><h5>' + col.title + '</h5><ul>' + col.items.map(function (x) { x = it(x); return '<li><a href="' + x.href + '">' + x.label + '</a></li>'; }).join('') + '</ul></div>';
+    }).join('');
+    if (m.cards) s += '<div class="' + (m.cards.layout === 'side' ? 'side' : 'cards') + '">' + m.cards.items.map(card).join('') + '</div>';
+    return s + bar();
+  };
+
+  // hover behaviour
+  var mg = document.getElementById('wf-mg'), sc = document.getElementById('wf-scrim'), nav = root.querySelector('nav'),
+      links = [].slice.call(root.querySelectorAll('.nav-links a')), tm;
+  function close() { mg.classList.remove('open'); sc.classList.remove('on'); links.forEach(function (a) { a.classList.remove('act'); }); }
+  links.forEach(function (a) {
+    a.addEventListener('mouseenter', function () {
+      clearTimeout(tm); var k = a.dataset.m;
+      if (!k) { close(); return; }
+      mg.innerHTML = '<div class="wrap">' + build(C.menus[k]) + '</div>';
+      mg.classList.add('open'); sc.classList.add('on');
+      links.forEach(function (x) { x.classList.toggle('act', x === a); });
+    });
+    a.addEventListener('click', function (e) { if (a.dataset.m) e.preventDefault(); });
+  });
+  nav.addEventListener('mouseleave', function () { tm = setTimeout(close, 120); });
+  nav.addEventListener('mouseenter', function () { clearTimeout(tm); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+});
+</script>
+
+
+<!-- ======================= HERO ======================= -->
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Source by Webflow</p>
+    <h1>Where marketers and agents run the web</h1>
+    <p>The platform for modern marketing teams and agents to harness the web, grow their business, and do their best work together. Now in a limited research preview.</p>
+    <div class="ctas"><a class="btn" href="#">▶ Watch launch video</a><a class="link" href="#form">Join research preview →</a></div>
+  </div>
+
+  <!-- ORANGE LONG BAR (IMG 01) sits behind; screenshot (IMG 02) is sticky and overlaps it -->
+  <div class="bar-stage">
+    <div class="bar"><img class="slot" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8c391819d54491c9ae46b0_source-hero-bg-p-2000.webp" alt="IMG 01 - orange long bar background"></div>
+    <div class="shot"><img class="slot" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8c3808cb5f764852177b59_48241cbaffbe02788ea715d1c85e9913_source-hero-p-1600.webp" alt="IMG 02 - hero app screenshot (944 x 700)"></div>
+  </div>
+</section>
+
+<!-- ======================= INTRO + TABS ======================= -->
+<section class="intro">
+  <div class="wrap">
+    <p class="tag">A shared home for marketing teams and their agents</p>
+    <h3>Launch, optimize, and scale digital experiences together, with every marketer, designer, and developer getting a workspace tailored to the jobs and outcomes they own.</h3>
+
+    <div class="tabs">
+      <input type="radio" name="tab" id="t1" checked><input type="radio" name="tab" id="t2"><input type="radio" name="tab" id="t3"><input type="radio" name="tab" id="t4"><input type="radio" name="tab" id="t5">
+      <div class="nav"><label for="t1">For marketers</label><label for="t2">For agencies</label><label for="t3">For designers</label><label for="t4">For developers</label><label for="t5">For agents</label></div>
+
+      <div class="panel p1">
+        <div class="row"><img class="slot" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f1a9d7e00f8d2af116019_source-solutions_marketers_workspaces-p-500.webp" alt="IMG 03"><div><h4>Get a workspace tailored to you</h4><p>Work from an interface shaped around the job you own, with the access and tools you need already in place.</p></div></div>
+        <div class="row"><img class="slot" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f1aaa62e2344acb9a9125_source-solutions_agents_always-on.webp" alt="IMG 04"><div><h4>Agents that drive impact alongside you</h4><p>Your agents run in the background, proactively flagging opportunities in your Inbox, from an AEO fix to a new CRO test worth running, with the work already drafted and ready for your review.</p></div></div>
+        <div class="row"><img class="slot" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f1aaaaa67ff796daee0b3_c1c9f282efa3cfb5631ddf66da836f54_source-solutions_marketers_team-p-500.webp" alt="IMG 05"><div><h4>Empower more of the team to drive impact on the web</h4><p>Customizable workspaces and agents allow more of your team to contribute, safely: a CMO reviews and approves a new blog, while a product marketer ships an agent-drafted update based on competitive intel.</p></div></div>
+      </div>
+      <div class="panel p2">
+        <div class="row"><img class="slot" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f1aaa90758478ebff3d2b_source-solutions_designers_build-p-500.webp" alt="IMG 06"><div><h4>Take on work you used to turn away</h4><p>Source works directly on real code and any stack, so the ceiling on technical builds, and which clients you can serve, lifts.</p></div></div>
+        <div class="row"><img class="slot" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f1aab54b1f25d627fe156_source-solutions_agencies_stack-p-500.webp" alt="IMG 07"><div><h4>Turn your playbook into a product</h4><p>Build custom interfaces around how your clients' team operates, then turn them into a product you resell across every project that needs it.</p></div></div>
+        <div class="row"><img class="slot" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f1aaa37d912a5182c19b3_source-solutions_agencies_strategy-p-500.webp" alt="IMG 08"><div><h4>Be the AI consultant your clients are asking for</h4><p>Source gives you the platform to bring scalable agentic workflows to your clients' teams, turning AI consulting into a real, sellable service.</p></div></div>
+      </div>
+      <div class="panel p3"> <!-- copy not seen in recording: edit freely -->
+        <div class="row"><img class="slot" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f1aaaee2c30d5a7c32303_source-solutions_designers_comments-p-500.webp" alt="IMG 09"><div><h4>Encode the brand system</h4><p>Bring in components, styles, voice, and tone, so everything a marketer or agent ships stays on brand and meets the quality bar.</p></div></div>
+        <div class="row"><img class="slot" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f1aaa6d11b723894afdac_source-solutions_developers_workspaces-p-500.webp" alt="IMG 10"><div><h4>Build agentically or visually, on the same surface</h4><p>Ask an agent to explore a new hero concept, then take visual control yourself for the finishing touches, or when craft calls for it.</p></div></div>
+        <div class="row"><img class="slot" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f1aaa62e2344acb9a9120_source-solutions_developers_code-p-500.webp" alt="IMG 11"><div><h4>Turn on canvas comments into tasks</h4><p>Leave a comment in visual context and an agent turns it into a task, works it, and brings it back for your review.</p></div></div>
+      </div>
+      <div class="panel p4">
+        <div class="row"><img class="slot" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f1aab54b1f25d627fe156_source-solutions_agencies_stack-p-500.webp" alt="IMG 12"><div><h4>Connect your codebase and stack</h4><p>Connect your codebase, CMS, and martech stack (including sites built on Webflow), and Source orchestrates across it.</p></div></div>
+        <div class="row"><img class="slot" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f1a9d7e00f8d2af116019_source-solutions_marketers_workspaces-p-500.webp" alt="IMG 13"><div><h4>Configure a workspace for every teammate</h4><p>Set up a workspace for each team member, then define guardrails, like permissions and review paths, that govern what marketers and agents can touch.</p></div></div>
+        <div class="row"><img class="slot" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f1aaa60471508a78dedd6_source-solutions_agents_code-p-500.webp" alt="IMG 14"><div><h4>Leverage agents or drop into code</h4><p>Build with agents or when code is the fastest way to get something done, you can work there directly.</p></div></div>
+      </div>
+      <div class="panel p5"> <!-- copy not seen in recording: edit freely -->
+        <div class="row"><img class="slot" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f1aaa649eb5801b690586_source-solutions_designers_encode-p-500.webp" alt="IMG 15"><div><h4>Work directly on the code that ships</h4><p>Source’s agents have direct access to the code that ships, letting them take on larger, more complex changes without the constraints of an abstraction layer.</p></div></div>
+        <div class="row"><img class="slot" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f1aaa37d912a5182c19b3_source-solutions_agencies_strategy-p-500.webp" alt="IMG 16"><div><h4>Always on, and ahead of the ask</h4><p>Agents don't wait to be asked. They monitor performance, surface opportunities, and act on your behalf once you approve, getting sharper with every launch.</p></div></div>
+        <div class="row"><img class="slot" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f1aaa221aa13873daed2d_source-solutions_agents_custom-p-500.webp" alt="IMG 17"><div><h4>Scoped to the job you need done</h4><p>Create and customize agents to specific jobs you need done, like one that flags pages slipping on conversion or another that checks every new page for brand voice before it ships.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= KEEP ME UPDATED ======================= -->
+<section class="form-sec" id="form">
+  <div class="wrap">
+    <div class="left">
+      <img class="slot icon" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8decf74a5b39c6e254be2a_b72e9e5dd945d5304080e1532cc857be_wf_source_logo_img_1.webp" alt="IMG 18 - Source app icon 60x60">
+      <h2>Keep me updated</h2>
+      <p>Source by Webflow is in a limited research preview: an early, hands-on version of the platform that's evolving alongside the people using it.</p>
+      <p>Fill out this form to stay in the loop on Source updates, or if you want a hand in shaping what's next, check the box and apply to join the research preview. If approved, we'll reach out with next steps.</p>
+    </div>
+
+    <form class="update-form">
+                <div class="field">
+                    <label>Business email*</label>
+                    <input type="email" placeholder="Enter your email">
+                </div>
+                <div class="field">
+                    <label>Who do you typically build for?*</label>
+                    <select><option>Select...</option></select>
+                </div>
+                <div class="field">
+                    <label>What best describes your role?*</label>
+                    <select>
+                        <option>Select...</option>
+                        <option value="">content marketer</option>
+                        <option value="">Developer</option>
+                        <option value="">Designer</option>
+                        <option value="">Executive</option>
+                        <option value="">Growth marketer</option>
+                        <option value="">Other</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Company size</label>
+                    <select>
+                        <option>Select...</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>First name*</label>
+                    <input type="text" placeholder="Enter your first name">
+                </div>
+                <div class="field">
+                    <label>Last name*</label>
+                    <input type="text" placeholder="Enter your last name">
+                </div>
+                <div class="field">
+                    <label>Company*</label>
+                    <input type="text" placeholder="Where do you work?">
+                </div>
+                <div class="field">
+                    <label>Title*</label>
+                    <input type="text" placeholder="What is your job title?">
+                </div>
+                <div class="field">
+                    <label>Country*</label>
+                    <select>
+                        <option>United States</option>
+                        <option value="">• United States</option>
+                        <option value="">• Afghanistan</option>
+                        <option value="">• Albania</option>
+                        <option value="">• Algeria</option>
+                        <option value="">• Andorra</option>
+                        <option value="">• Angola</option>
+                        <option value="">• Antigua and Barbuda</option>
+                        <option value="">• Argentina</option>
+                        <option value="">• Armenia</option>
+                        <option value="">• Australia</option>
+                        <option value="">• Austria</option>
+                        <option value="">• Azerbaijan</option>
+                        <option value="">• Bahamas</option>
+                        <option value="">• Bahrain</option>
+                        <option value="">• Bangladesh</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Phone number</label>
+                    <input type="tel" placeholder="Enter your phone number">
+                </div>
+
+                <div class="check-row">
+                    <input type="checkbox" id="c1">
+                    <label for="c1">I want to apply for the research preview</label>
+                </div>
+
+                <button type="submit" class="submitt-btn">Subscribe to updates</button>
+                <p class="fine">By submitting this form, you agree to Webflow's Terms of Service and Privacy Policy.</p>
+            </form>
+    
+  </div>
+</section>
+
+<!-- ======================= FEATURES ======================= -->
+<section class="feat">
+  <nav class="sidenav"><a href="#build">Build</a><a href="#agents">Agents</a><a href="#workspace">Workspace</a><a href="#stack">Stack</a></nav>
+
+  <!-- BUILD -->
+  <div class="block" id="build">
+    <h2>Build agentically<br>and visually</h2>
+    <div class="orange card-build">
+      <img class="slot bg" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f2c5a0f44e9fc2c52cba8_wf_source_scroll_bg_1-p-1600.webp" alt="IMG 19 - yellow/orange card bg">
+      <img class="slot app" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f2c5ad74a8e5b276a1996_fa0960124097988873793452fdb108cb_wf_source_scroll_bg_2-p-800.webp" alt="IMG 20 - dark app window (absolute, bleeds off bottom)">
+    </div>
+    <div class="copy">
+      <p class="lead">Let agents handle the heavy lifting, then apply finishing touches with direct visual edits, or switch between both. In Source, you're never trading off speed, control, or craft.</p>
+      <ul>
+        <li><img class="slot" src="https://dhygzobemt712.cloudfront.net/Icons/Dark/24px/UserAI.svg" alt="svg icon"><div><h5>Let agents do the heavy lifting</h5><p>Leverage an agent for time-intensive or multi-step work: scaffolding a new build, switching from light to dark mode, or generating on-brand variants for a new campaign.</p></div></li>
+        <li><img class="slot" src="https://dhygzobemt712.cloudfront.net/Icons/Dark/24px/EditCanvas.svg" alt="svg icon"><div><h5>Make direct on canvas edits</h5><p>Build directly on the visual canvas when craft and precision call for a human touch, or when it's simply faster than prompting, like changing a headline's font size.</p></div></li>
+        <li><img class="slot" src="https://dhygzobemt712.cloudfront.net/Icons/Dark/24px/Comment.svg" alt="svg icon"><div><h5>Turn comments into agent tasks</h5><p>Drop a note on the canvas, like “update this CTA button to match the new brand colors,” and an agent picks it up, drafts the change, and flags it for review.</p></div></li>
+     
+      </ul>
+    </div>
+  </div>
+
+  <!-- AGENTS -->
+  <div class="block" id="agents">
+    <h2>Agents that work<br>for your team</h2>
+    <div class="orange card-build">
+      <img class="slot bg" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f3843525dce3d2d1cf5cd_wf_source_scroll_bg_3-p-1600.webp" alt="IMG 21 - card bg">
+      <img class="slot app" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f384213d2e065920affd8_554a8f2d1d0c9ae19bfb5e26f12b584d_wf_source_scroll_bg_4-p-800.avif" alt="IMG 22 - agents app window">
+    </div>
+    <div class="copy">
+      <p class="lead">Customizable agents continuously measure, recommend, and act on your behalf, ensuring your site is always improving and everything you ship moves the business forward.</p>
+      <ul>
+        <li><img class="slot" src="https://dhygzobemt712.cloudfront.net/Icons/Dark/24px/SiteMultiple.svg" alt="svg icon"><div><h5>Always on, and ahead of the ask</h5><p>Agents don't wait to be asked. When there's an opportunity to improve a metric, they flag it in your Source inbox with a recommendation already drafted, ready for your approval.</p></div></li>
+        <li><img class="slot" src="https://dhygzobemt712.cloudfront.net/Icons/Dark/24px/CMS.svg" alt="svg icon"><div><h5>Create the agents your team needs</h5><p>Build agents scoped to exactly the job you need done, like one that recommends tests to run on underperforming pages, or another that checks for brand voice.</p></div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- WORKSPACE: white image (.fg) is ABSOLUTE on the orange bg (.bg); 5 vertical tabs -->
+  <div class="block" id="workspace">
+    <h2>A workspace for<br>every team member</h2>
+    <div class="ws">
+      <input type="radio" name="ws" id="w1" checked>
+      <label for="w1">
+        <img class="slot bg" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f3843525dce3d2d1cf5cd_wf_source_scroll_bg_3-p-1080.webp" alt="IMG 23 - orange bg">
+        <img class="slot fg" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a90c471a76c0180268a1ff8_e62499130d5892f17ce6a493ea80e91d_wf_source_Activity.avif" alt="IMG 24 - white Audit log image (absolute)">
+        <span>Audit</span>
+       </label>
+      <input type="radio" name="ws" id="w2">
+      <label for="w2">
+        <img class="slot bg" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f3843525dce3d2d1cf5cd_wf_source_scroll_bg_3-p-1080.webp" alt="IMG 25 - orange bg">
+        <img class="slot fg" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f384213d2e065920affd8_554a8f2d1d0c9ae19bfb5e26f12b584d_wf_source_scroll_bg_4-p-800.avif" alt="IMG 26 - Agents image">
+        <span>Agents</span>
+       </label>
+      <input type="radio" name="ws" id="w3">
+      <label for="w3">
+        <img class="slot bg" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f3843525dce3d2d1cf5cd_wf_source_scroll_bg_3-p-1080.webp" alt="IMG 27 - orange bg">
+        <img class="slot fg" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a90c470a99d8a31f7ac69c8_4b4f05fbc96fb18ad9bf1a57e3f6d12e_wf_source_CMS.avif" alt="IMG 28 - CMS image">
+        <span>CMS</span>
+      </label>
+      <input type="radio" name="ws" id="w4">
+      <label for="w4">
+        <img class="slot bg" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f3843525dce3d2d1cf5cd_wf_source_scroll_bg_3-p-1080.webp" alt="IMG 29 - orange bg">
+        <img class="slot fg" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a90c4728fe275dad44f330c_c785d5bcb95f0455221e7fd10dd624e1_wf_source_Review.avif" alt="IMG 30 - Inbox image">
+        <span>Inbox</span>
+      </label>
+      <input type="radio" name="ws" id="w5">
+      <label for="w5">
+        <img class="slot bg" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f3843525dce3d2d1cf5cd_wf_source_scroll_bg_3-p-1080.webp" alt="IMG 31 - orange bg">
+        <img class="slot fg" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a91ecd4f0859af62e708eda_Brand%20System.avif" alt="IMG 32 - Review image">
+        <span>Review</span>
+      </label>
+      <input type="radio" name="ws" id="w6">
+      <label for="w6">
+        <img class="slot bg" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f3843525dce3d2d1cf5cd_wf_source_scroll_bg_3-p-1080.webp" alt="IMG 33 - orange bg">
+        <img class="slot fg" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f384213d2e065920affd8_554a8f2d1d0c9ae19bfb5e26f12b584d_wf_source_scroll_bg_4.avif" alt="IMG 34 - Brand (Color) image, dark">
+        <span>Brand</span>
+    </label>
+    </div>
+    <div class="copy">
+      <p class="lead">Every marketer, designer, and developer gets a workspace tailored to their role and outcomes they own through Views: dedicated surfaces for every web marketing job your team needs to do.</p>
+      <ul>
+        <li><img class="slot" src="https://dhygzobemt712.cloudfront.net/Icons/Dark/24px/SiteMultiple.svg" alt="svg icon"><div><h5>Leverage default Webflow Views</h5><p>Start with out-of-the-box Views for visual site building, content management, assets, optimization, and more.</p></div></li>
+        <li><img class="slot" src="https://dhygzobemt712.cloudfront.net/Icons/Dark/24px/CMS.svg" alt="svg icon"><div><h5>Create custom Views around your team's workflows</h5><p>Like a dashboard tracking the the metrics you care most about, or a View built around your org's unique content approval process.</p></div></li>
+        <li><img class="slot" src="https://dhygzobemt712.cloudfront.net/Icons/Dark/24px/Settings.svg" alt="svg icon"><div><h5>Built-in governance</h5><p>Brand systems, approval paths, and audit trails are built in from day one, so teams and agents can move fast and collaborate safely at scale.</p></div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- STACK -->
+  <div class="stack" id="stack">
+    <div class="txt">
+      <h2>Connect<br>any stack</h2>
+      <h5>Source connects to the stack you already use — including sites built in Webflow.</h5>
+      <p>Bring your codebase, CMS, martech tools, and hosting, or use Webflow's own stack. Either way, Source provides the agents, flexible workspaces, and governance your team needs to launch, optimize, and scale the web.</p>
+    </div>
+    <div class="orange">
+      <img class="slot bg" src="https://dhygzobemt712.cloudfront.net/Icons/Dark/24px/Settings.svg" alt="IMG 35 - red/orange card bg">
+      <img class="slot fg" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8f42037100628d7cbdfa69_wf_source_scroll_bg_6-p-500.webp" alt="IMG 36 - dark chat card (absolute, inset)">
+    </div>
+  </div>
+</section>
+
+<!-- ======================= TESTIMONIALS ======================= -->
+<section class="testi">
+  <div class="wrap">
+    <div class="arrows"><a href="#q1">←</a><a href="#q2">→</a></div>
+    <div class="track">
+      <div class="q" id="q1"><div class="who"><img class="slot" src="https://cdn.prod.website-files.com/687e8d1b96312cc631cafec7/68a4997133753fb7ee6f7c9b_RGvIeafxlfy8peS56Rpqyn15s_DGypOG97DTmeNtGDY.webp" alt="IMG 37 avatar"><div><b>Matt Varughese</b><span>Founder, 8020</span></div></div><blockquote>"Clients used to ask us about AI for one reason: speed. Now they expect it to scale across the website lifecycle and make them better marketers, not just faster ones. That's where Source comes in: build a page from a prompt, run agents with real guardrails so work gets done while you sleep, and give everyone on the team a view of only what they need to touch."</blockquote></div>
+      <div class="q" id="q2"><div class="who"><img class="slot" src="https://cdn.prod.website-files.com/687e8d1b96312cc631cafec7/68a49dae4348cda31962591b_IDRfPWlo9NaNmTXZFDBnx4EbDKfuPdv66zNCVHj74rM.webp" alt="IMG 38 avatar"><div><b>Uros Mikic</b><span>Founder &amp; CEO, Flow Ninja</span></div></div><blockquote>"Source is the only solution that allows whole marketing teams to move fast with AI, while still having the governance and scalability of a true enterprise-grade platform."</blockquote></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= FAQ + RESOURCES ======================= -->
+<section class="faq-sec">
+  <div class="wrap">
+    <div class="faq">
+      <p class="lbl">FAQs</p>
+      <details><summary>What is Source by Webflow?</summary><p>Source by Webflow is a new platform for marketing teams and their agents to launch, optimize, and scale digital experiences, together.
+
+Source connects with your codebase and martech stack, bringing agentic and visual development into a shared operating environment, with every marketer, designer, and developer getting a workspace tailored to their job and the outcomes they own.</p></details>
+      <details><summary>What happens to the Webflow platform I've already built my site on?</summary><p>Webflow powers digital experiences for hundreds of thousands of organizations around the world, and the platform you know and love isn’t going anywhere. As we build Source, we will continue to invest in our existing platform that teams use every day, including expanding its agentic capabilities. You've seen this in our recent launches, from MCP 2.0 and 2.1 to native AEO agents to AI Code Components, with much more on the roadmap that we shared in our Webflow Conference keynote.
+
+When Source is ready for you, and if you choose to migrate to our new platform, we will provide a supported path.</p></details>
+      <details><summary>How does code as the foundation unlock more agent capability?</summary><p>Code is the native language of AI. When agents can work directly with the code that actually ships (instead of an abstraction layer)  they can understand your whole system directly, make changes to it, and evaluate their own work without limitations (unless you set them).
+
+That’s a fundamental shift from how Webflow has worked historically, and what lets Source unlock agents as top-tier teammates, not just tools you prompt. For more context behind our decision to make code the foundation of Source, check out this blog post. 
+
+Can Source work with the stack I already have?</p></details>
+      <details><summary>Can Source work with the stack I already have?</summary><p>Yes. Composability is a core tenet of how we built Source: you can connect your existing codebase, martech stack, and hosting, and Source orchestrates across them.</p></details>
+      <details><summary>What stays under human control versus what agents can do autonomously?</summary><p>Yes. Composability is a core tenet of how we built Source: you can connect your existing codebase, martech stack, and hosting, or use more of Webflow’s own stack. Either way, Source provides the flexible workspaces, governance, and agentic layer your team needs to launch, optimize, and scale the web.</p></details>
+      <details><summary>How soon can I get access to Source?</summary><p>Source is currently in a limited research preview, and we'll be enrolling select agency partners and customers in a phased approach over the coming months.</p><p>Fill out the form on this page to stay in the loop on updates, or if you want a hand in shaping what's next, check the box and apply to join the research preview. If you're approved, we'll reach out with next steps.</p></details>
+    </div>
+    <div class="res">
+      <p class="lbl">More resources</p>
+      <div class="it"><img class="slot" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a988fa22773c9a17670bb8e_source-lp_video_unveil-p-500.avif" alt="IMG 39 thumb"><div><b>Source unveiling</b><a class="link" href="https://webflow.com/webflowconf/session/opening-keynote">▶ Watch the replay</a></div></div>
+      <div class="it"><img class="slot" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a988fa268f409d5e080949c_source-lp_video_deep-dive-p-500.avif" alt="IMG 40 thumb"><div><b>Source: a closer look</b><a class="link" href="https://webflow.com/webflowconf/session/a-first-look-at-what-s-next-636af">▶ Watch the replay</a></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= GET TO THE SOURCE ======================= -->
+<section class="cta">
+  <img class="slot ghost" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8e97f9b69a6694cd66b1dd_home-source-bg.webp" alt="IMG 41 - big grey Source logo">
+  <img class="slot shot" src="https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/6a8c87ad8f83b6ca10bfec04_961a433ecbc03d109c404f878b7c740a_source-cta-p-1600.avif" alt="IMG 42 - app screenshot, bleeds off the bottom">
+  <div class="wrap">
+    <h2>Get to the source</h2>
+    <p>Source is in a limited research preview today. Stay in the loop on updates, or if you want to help shape Source, apply to join the research preview.</p>
+    <a class="btn" href="#form">Keep me updated</a>
+  </div>
+</section>
+<a class="badge" href="#">
+        <i>
+            <img src="./webflow images/log -n-small.png" alt="">
+        </i>Made in Webflow
+    </a>
+<!-- ======================= PASTE YOUR FOOTER HERE ======================= -->
+
+<script>
+window.WF_FOOTER_CONFIG = {
+  copyright: "© 2026 Webflow, Inc. All rights reserved",
+
+  columns: [
+    [ { title: "Source by Webflow", links: ["Research preview"] },
+      { title: "Product", links: ["Platform","Design","Edit content","Interactions","GSAP","Page building","Shared Libraries","Collaboration","CMS","Hosting","Localize","Security","Ecommerce","Analyze","Optimize","SEO",["MCP","#","new"],["AEO","#","new"],"Webflow Cloud",["DevLink","#","Labs"],["Figma to Webflow","#","Labs"],"Accessibility","AI"] } ],
+    [ { title: "Solutions", links: ["Enterprise","Global alliances","Agencies","Freelancers"] },
+      { title: "Resources", links: ["University","Blog","Customer stories","Webinars & ebooks","Apps","Libraries","Templates","Developers","Made in Webflow","Glossary","Livestreams","The Webflow Way","Business Value Calculator"] } ],
+    [ { title: "Company", links: ["About",["Careers","#","We’re hiring!"],"Press","Webflow Ventures","Webflow Shop","Terms of Service","Privacy policy","Cookie policy","Accessibility statement"] },
+      { title: "Compare", links: ["Contentful","Framer","Sitecore","Wix","WordPress"] } ],
+    [ { title: "Community", links: ["Discover the community","Partner with Webflow","Certified Partners","Become a template designer","Become an affiliate","Become a Global Leader","Find a meetup near you"] },
+      { title: "Get help", links: ["Support","Pricing","Status","Community Homebase","Wishlist"] } ]
+  ],
+
+  social: [   // [symbol/text, url, accessible name]
+    ["W","#","Webflow"], ["▶","#","YouTube"], ["X","#","X"], ["f","#","Facebook"], ["in","#","LinkedIn"], ["◎","#","Instagram"], ["♪","#","TikTok"]
+  ],
+
+  // Big W on the right. Each slide = caption + fallback background + optional image/video URL.
+  // Leave media "" to show the gradient. .mp4/.webm play as silent looping video.
+  bigW: {
+    interval: 3000,   // ms between slides while hovering
+    slides: [
+      { caption: "Duracell Coppertop Optimum", bg: "linear-gradient(120deg,#8a8a8e,#b8641e 55%,#4a2208)", media: "https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/68b89b6bc974abdca78db913_interactions_miw-slider_cloneable-asset_08.webp" },
+      { caption: "Together",   bg: "linear-gradient(160deg,#3a1fd0,#1a0a60 70%)", media: "https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/68b9a05cd703a66b0e92c61d_design_miw_sites_02.avif" },
+      { caption: "Bli…",       bg: "linear-gradient(160deg,#d83a3a,#a01a1a)",     media: "https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/68b8544804f09c2ea80de421_d9be4457075c7b43f46648f9470ebe50_interactions-hero-09.avif" },
+      { caption: "",           bg: "repeating-linear-gradient(90deg,#fff 0 24px,#7fe0d8 24px 48px)", media: "https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/68b9a05cc4e511863b3de078_design_miw_sites_04.avif" },
+      { caption: "take time",  bg: "linear-gradient(160deg,#f2542a,#f09a1a)",     media: "https://cdn.prod.website-files.com/686294e263eb7e215bd232f7/68b8544827ddb0ac640381e8_2f37143fccefde0915d24c72a5a15da7_interactions-hero-05.avif" }
+    ]
+  }
+};
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var C = window.WF_FOOTER_CONFIG, root = document.getElementById('wf-footer');
+  var lk = function (x) {
+    if (typeof x === 'string') x = [x, '#'];
+    return '<li><a href="' + (x[1] || '#') + '">' + x[0] + '</a>' + (x[2] ? '<em>' + String(x[2]).toUpperCase() + '</em>' : '') + '</li>';
+  };
+
+  root.innerHTML =
+    '<div class="wrap"><div class="cols">' +
+    C.columns.map(function (col) {
+      return '<div>' + col.map(function (g) { return '<div class="gp"><h4>' + g.title + '</h4><ul>' + g.links.map(lk).join('') + '</ul></div>'; }).join('') + '</div>';
+    }).join('') +
+    '</div><div class="low"><span>' + C.copyright + '</span><div class="soc">' +
+    C.social.map(function (s) { return '<a href="' + s[1] + '" aria-label="' + (s[2] || s[0]) + '">' + s[0] + '</a>'; }).join('') +
+    '</div></div></div><div class="ft-w" id="wf-ftW" aria-label="Webflow"></div>';
+
+  // big W slides
+  var fw = document.getElementById('wf-ftW'), S = C.bigW.slides, wi = -1, wt;
+  fw.innerHTML = S.map(function (s) { return '<div class="wsl" style="background:' + s.bg + '">' + s.caption + '<div class="pr">01<i></i>02</div></div>'; }).join('');
+
+  // apply image / video links
+  [].forEach.call(fw.children, function (host, i) {
+    var u = S[i].media; if (!u) return;
+    var isVid = /\.(mp4|webm|mov)(\?|$)/i.test(u), e = document.createElement(isVid ? 'video' : 'img');
+    e.src = u; e.className = 'mi';
+    if (isVid) { e.muted = true; e.loop = true; e.autoplay = true; e.playsInline = true; e.setAttribute('playsinline', ''); e.play && e.play().catch(function () {}); }
+    else e.alt = '';
+    host.insertBefore(e, host.firstChild); host.classList.add('hide-ph');
+  });
+
+  function show() { wi = (wi + 1) % S.length; [].forEach.call(fw.children, function (c, i) { c.classList.toggle('cur', i === wi); }); }
+  fw.addEventListener('mouseenter', function () { fw.classList.add('on'); show(); wt = setInterval(show, C.bigW.interval || 3000); });
+  fw.addEventListener('mouseleave', function () { fw.classList.remove('on'); clearInterval(wt); });
+});
+</script>
+
+<footer class="wf-ft" id="wf-footer"></footer>   <!-- PLACE THIS WHERE THE FOOTER SHOULD APPEAR -->
+
+
+</body>
+</html>
